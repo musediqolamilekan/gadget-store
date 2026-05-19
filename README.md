@@ -212,4 +212,4 @@ Zero heavy UI libraries — everything built from scratch with Tailwind for maxi
 
 ---
 
-Built with ⚡ by HolarzGadgets
+Built with ⚡ by Olamilekan Musediq
