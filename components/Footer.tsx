@@ -1,103 +1,211 @@
-import Link from "next/link";
-import { Zap, Github, Twitter, Instagram } from "lucide-react";
+"use client";
 
-const FOOTER_LINKS = {
-  Shop: [
-    { label: "Phones",       href: "/products?category=phones" },
-    { label: "Laptops",      href: "/products?category=laptops" },
-    { label: "Smartwatches", href: "/products?category=smartwatches" },
-    { label: "Power Banks",  href: "/products?category=power-banks" },
-    { label: "Earbuds",      href: "/products?category=earbuds" },
-    { label: "Accessories",  href: "/products?category=accessories" },
-  ],
-  Support: [
-    { label: "FAQ",             href: "/faq" },
-    { label: "Shipping Policy", href: "/shipping" },
-    { label: "Returns",         href: "/returns" },
-    { label: "Warranty",        href: "/warranty" },
-    { label: "Contact Us",      href: "/contact" },
-  ],
-  Company: [
-    { label: "About Us",    href: "/about" },
-    { label: "Careers",     href: "/careers" },
-    { label: "Press",       href: "/press" },
-    { label: "Blog",        href: "/blog" },
-    { label: "Affiliates",  href: "/affiliates" },
-  ],
+import Link from "next/link";
+import { Zap, Twitter, Instagram, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import type { SanityCategory } from "@/sanity/lib/fetch";
+
+// ─────────────────────────────────────────────────────────────
+// STATIC LINKS
+// ─────────────────────────────────────────────────────────────
+const SUPPORT_LINKS = [
+  { label: "FAQ", href: "/faq" },
+  { label: "Policy", href: "/policies" },
+  { label: "Contact Us", href: "/contact" },
+];
+
+const COMPANY_LINKS = [
+  { label: "About Us", href: "/about" },
+  { label: "Blog", href: "/blog" },
+];
+
+const SOCIAL = [
+  { Icon: Twitter, href: "#", label: "Twitter" },
+  { Icon: Instagram, href: "#", label: "Instagram" },
+  { Icon: MessageCircle, href: "https://wa.me/2349055427487", label: "WhatsApp" },
+];
+
+// ─────────────────────────────────────────────────────────────
+// ANIMATION VARIANTS
+// ─────────────────────────────────────────────────────────────
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 
-export default function Footer() {
+const columnVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1, y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const linkVariants = {
+  hidden: { opacity: 0, x: -6 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+};
+
+// ─────────────────────────────────────────────────────────────
+// LINK COLUMN
+// ─────────────────────────────────────────────────────────────
+function LinkColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+}) {
+  return (
+    <motion.div variants={columnVariants}>
+      <h3 className="text-xs font-bold tracking-widest uppercase
+        text-slate-400 mb-4">
+        {title}
+      </h3>
+      <motion.ul
+        className="space-y-2.5"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-40px" }}
+      >
+        {links.map(({ label, href }) => (
+          <motion.li key={label} variants={linkVariants}>
+            <Link
+              href={href}
+              className="text-sm text-slate-500 hover:text-slate-200
+                transition-colors duration-200"
+            >
+              {label}
+            </Link>
+          </motion.li>
+        ))}
+      </motion.ul>
+    </motion.div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// FOOTER
+// ─────────────────────────────────────────────────────────────
+interface FooterProps {
+  categories: SanityCategory[];
+}
+
+export default function Footer({ categories }: FooterProps) {
+  const shopLinks = categories.map((c) => ({
+    label: c.title,
+    href: `/products?category=${c.slug}`,
+  }));
+
   return (
     <footer className="bg-slate-950 border-t border-slate-800/60 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2 group mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-violet-600 flex items-center justify-center">
+
+        {/* ── Main grid ─────────────────────────────────── */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          {/* Brand column */}
+          <motion.div
+            className="col-span-2 md:col-span-1"
+            variants={columnVariants}
+          >
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 group mb-4"
+            >
+              <motion.div
+                className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500
+                  to-violet-600 flex items-center justify-center"
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow: "0 0 20px rgba(6,182,212,0.6)",
+                }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <Zap size={16} className="text-white" />
-              </div>
+              </motion.div>
               <span className="text-lg font-black tracking-tighter text-slate-50">
                 Holarz<span className="text-cyan-400">Gadgets</span>
               </span>
             </Link>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
+
+            <p className="text-sm text-slate-500 leading-relaxed max-w-xs mb-5">
               Your trusted destination for premium gadgets and tech accessories.
               Curated for performance. Built for the future.
             </p>
-            <div className="flex gap-3 mt-5">
-              {[
-                { Icon: Twitter, href: "#", label: "Twitter" },
-                { Icon: Instagram, href: "#", label: "Instagram" },
-                { Icon: Github, href: "#", label: "GitHub" },
-              ].map(({ Icon, href, label }) => (
-                <a
+
+            {/* Social icons */}
+            <div className="flex gap-3">
+              {SOCIAL.map(({ Icon, href, label }) => (
+                <motion.a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700/50
-                    flex items-center justify-center text-slate-400 hover:text-slate-200 transition-all"
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  whileHover={{ scale: 1.12, y: -2 }}
+                  whileTap={{ scale: 0.92 }}
+                  className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700
+                    border border-slate-700/50
+                    flex items-center justify-center
+                    text-slate-400 hover:text-slate-200 transition-colors"
                 >
                   <Icon size={15} />
-                </a>
+                </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Link columns */}
-          {Object.entries(FOOTER_LINKS).map(([title, links]) => (
-            <div key={title}>
-              <h3 className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-4">
-                {title}
-              </h3>
-              <ul className="space-y-2.5">
-                {links.map(({ label, href }) => (
-                  <li key={label}>
-                    <Link
-                      href={href}
-                      className="text-sm text-slate-500 hover:text-slate-200 transition-colors"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+          {/* Shop — from Sanity categories */}
+          <LinkColumn title="Shop" links={shopLinks} />
+          <LinkColumn title="Support" links={SUPPORT_LINKS} />
+          <LinkColumn title="Company" links={COMPANY_LINKS} />
+        </motion.div>
 
-        {/* Bottom bar */}
-        <div className="pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600">
+        {/* ── Bottom bar ────────────────────────────────── */}
+        <motion.div
+          className="pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row
+            items-center justify-between gap-4 text-xs text-slate-600"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <p>© {new Date().getFullYear()} HolarzGadgets. All rights reserved.</p>
+
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="hover:text-slate-400 transition-colors">
+            <Link
+              href="/privacy"
+              className="hover:text-slate-400 transition-colors"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-slate-400 transition-colors">
+            <Link
+              href="/terms"
+              className="hover:text-slate-400 transition-colors"
+            >
               Terms of Service
             </Link>
           </div>
-        </div>
+
+          <p className="flex items-center gap-1.5">
+            Built by{" "}
+            <a
+              href="https://wa.me/2349055427487"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-500 font-semibold hover:text-cyan-400 transition-colors"
+            >
+              Olamilekan Musediq
+            </a>
+          </p>
+        </motion.div>
       </div>
     </footer>
   );
