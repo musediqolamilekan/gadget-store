@@ -76,7 +76,7 @@ export interface SanityPost {
 export async function getAllProducts(): Promise<Product[]> {
   const data = await sanityClient.fetch<SanityProductCard[]>(
     ALL_PRODUCTS_QUERY, {},
-    { next: { revalidate: 60, tags: ["products"] } }
+    { next: { revalidate: 30, tags: ["products"] } }
   );
   return data.map(toProduct);
 }
@@ -84,7 +84,7 @@ export async function getAllProducts(): Promise<Product[]> {
 export async function getFeaturedProducts(): Promise<Product[]> {
   const data = await sanityClient.fetch<SanityProductCard[]>(
     FEATURED_PRODUCTS_QUERY, {},
-    { next: { revalidate: 300, tags: ["products", "featured"] } }
+    { next: { revalidate: 30, tags: ["products", "featured"] } }
   );
   return data.map(toProduct);
 }
@@ -92,7 +92,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 export async function getBestsellerProducts(): Promise<Product[]> {
   const data = await sanityClient.fetch<SanityProductCard[]>(
     BESTSELLER_PRODUCTS_QUERY, {},
-    { next: { revalidate: 300, tags: ["products", "bestsellers"] } }
+    { next: { revalidate: 30, tags: ["products", "bestsellers"] } }
   );
   return data.map(toProduct);
 }
@@ -103,7 +103,7 @@ export async function getProductBySlug(
   return sanityClient.fetch<SanityProductDetail | null>(
     PRODUCT_BY_SLUG_QUERY,
     { slug },
-    { next: { revalidate: 60, tags: [`product-${slug}`] } }
+    { next: { revalidate: 30, tags: [`product-${slug}`] } }
   );
 }
 
@@ -115,7 +115,7 @@ export async function getRelatedProducts(
   const data = await sanityClient.fetch<SanityProductCard[]>(
     RELATED_PRODUCTS_QUERY,
     { categorySlug, slug: currentSlug, limit },
-    { next: { revalidate: 300, tags: ["products"] } }
+    { next: { revalidate: 30, tags: ["products"] } }
   );
   return data.map(toProduct);
 }
@@ -126,7 +126,7 @@ export async function getProductsByCategory(
   const data = await sanityClient.fetch<SanityProductCard[]>(
     PRODUCTS_BY_CATEGORY_QUERY,
     { categorySlug },
-    { next: { revalidate: 60, tags: ["products", `category-${categorySlug}`] } }
+    { next: { revalidate: 30, tags: ["products", `category-${categorySlug}`] } }
   );
   return data.map(toProduct);
 }
@@ -134,7 +134,7 @@ export async function getProductsByCategory(
 export async function getAllProductSlugs(): Promise<{ slug: string }[]> {
   return sanityClient.fetch<{ slug: string }[]>(
     ALL_PRODUCT_SLUGS_QUERY, {},
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 30 } }
   );
 }
 
@@ -145,14 +145,14 @@ export async function getAllProductSlugs(): Promise<{ slug: string }[]> {
 export async function getAllCategories(): Promise<SanityCategory[]> {
   return sanityClient.fetch<SanityCategory[]>(
     ALL_CATEGORIES_QUERY, {},
-    { next: { revalidate: 3600, tags: ["categories"] } }
+    { next: { revalidate: 30, tags: ["categories"] } }
   );
 }
 
 export async function getFeaturedCategories(): Promise<SanityCategory[]> {
   return sanityClient.fetch<SanityCategory[]>(
     FEATURED_CATEGORIES_QUERY, {},
-    { next: { revalidate: 3600, tags: ["categories"] } }
+    { next: { revalidate: 30, tags: ["categories"] } }
   );
 }
 
@@ -162,7 +162,7 @@ export async function getCategoryBySlug(
   return sanityClient.fetch<SanityCategory | null>(
     CATEGORY_BY_SLUG_QUERY,
     { slug },
-    { next: { revalidate: 3600, tags: [`category-${slug}`] } }
+    { next: { revalidate: 30, tags: [`category-${slug}`] } }
   );
 }
 
@@ -172,7 +172,7 @@ export async function getCategoryWithProducts(
   return sanityClient.fetch<SanityCategoryWithProducts | null>(
     CATEGORY_WITH_PRODUCTS_QUERY,
     { slug },
-    { next: { revalidate: 60, tags: [`category-${slug}`, "products"] } }
+    { next: { revalidate: 30, tags: [`category-${slug}`, "products"] } }
   );
 }
 
@@ -183,7 +183,7 @@ export async function getCategoryWithProducts(
 export async function getAllBrands(): Promise<SanityBrand[]> {
   return sanityClient.fetch<SanityBrand[]>(
     ALL_BRANDS_QUERY, {},
-    { next: { revalidate: 3600, tags: ["brands"] } }
+    { next: { revalidate: 30, tags: ["brands"] } }
   );
 }
 
@@ -194,7 +194,7 @@ export async function getAllBrands(): Promise<SanityBrand[]> {
 export async function getActiveBanners(): Promise<SanityBanner[]> {
   return sanityClient.fetch<SanityBanner[]>(
     ACTIVE_BANNERS_QUERY, {},
-    { next: { revalidate: 300, tags: ["banners"] } }
+    { next: { revalidate: 30, tags: ["banners"] } }
   );
 }
 
@@ -205,14 +205,14 @@ export async function getActiveBanners(): Promise<SanityBanner[]> {
 export async function getAllPosts(): Promise<SanityPost[]> {
   return sanityClient.fetch<SanityPost[]>(
     ALL_POSTS_QUERY, {},
-    { next: { revalidate: 300, tags: ["posts"] } }
+    { next: { revalidate: 30, tags: ["posts"] } }
   );
 }
 
 export async function getFeaturedPosts(): Promise<SanityPost[]> {
   return sanityClient.fetch<SanityPost[]>(
     FEATURED_POSTS_QUERY, {},
-    { next: { revalidate: 300, tags: ["posts", "featured-posts"] } }
+    { next: { revalidate: 30, tags: ["posts", "featured-posts"] } }
   );
 }
 
@@ -222,7 +222,7 @@ export async function getPostBySlug(
   return sanityClient.fetch<SanityPost | null>(
     POST_BY_SLUG_QUERY,
     { slug },
-    { next: { revalidate: 300, tags: [`post-${slug}`] } }
+    { next: { revalidate: 30, tags: [`post-${slug}`] } }
   );
 }
 
@@ -232,14 +232,14 @@ export async function getPostsByCategory(
   return sanityClient.fetch<SanityPost[]>(
     POSTS_BY_CATEGORY_QUERY,
     { category },
-    { next: { revalidate: 300, tags: ["posts"] } }
+    { next: { revalidate: 30, tags: ["posts"] } }
   );
 }
 
 export async function getAllPostSlugs(): Promise<{ slug: string }[]> {
   return sanityClient.fetch<{ slug: string }[]>(
     ALL_POST_SLUGS_QUERY, {},
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 30 } }
   );
 }
 
@@ -250,6 +250,6 @@ export async function getRelatedPosts(
   return sanityClient.fetch<SanityPost[]>(
     RELATED_POSTS_QUERY,
     { category, slug },
-    { next: { revalidate: 300, tags: ["posts"] } }
+    { next: { revalidate: 30, tags: ["posts"] } }
   );
 }

@@ -239,9 +239,6 @@ export default async function HomePage() {
                         fill
                         sizes="(max-width:640px) 33vw, 200px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = "none";
-                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
                       <div className="absolute bottom-3 left-3 right-3">
