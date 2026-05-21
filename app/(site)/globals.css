@@ -84,3 +84,22 @@ html { scroll-behavior: smooth; }
 .delay-300 { animation-delay: 300ms; }
 .delay-375 { animation-delay: 375ms; }
 .delay-450 { animation-delay: 450ms; }
+
+.promo-banner-swiper .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+}
+
+.promo-banner-swiper .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgb(71 85 105);
+  opacity: 1;
+  transition: all 0.25s ease;
+}
+
+.promo-banner-swiper .swiper-pagination-bullet-active {
+  width: 28px;
+  border-radius: 9999px;
+  background: rgb(6 182 212);
+}

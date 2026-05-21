@@ -24,6 +24,7 @@ import {
 } from "@/sanity/lib/fetch";
 import type { SanityCategory } from "@/sanity/lib/fetch";
 import { SanityBanner } from "@/sanity/lib/types";
+import PromoBannerSection from "@/components/PromoBannerSection";
 
 // ─────────────────────────────────────────────────────────────
 // METADATA
@@ -69,6 +70,45 @@ const STATS = [
   { value: "24/7", label: "Expert Support" },
 ];
 
+const BANNER_ACCENT = {
+  cyan: {
+    outer: "from-cyan-900/40 via-slate-900 to-violet-900/40",
+    border: "border-cyan-500/20",
+    blob1: "bg-cyan-500/10",
+    blob2: "bg-violet-600/10",
+    badge: "bg-cyan-500/20 text-cyan-400",
+    titleAccent: "text-gradient-cyan",
+    btn: "bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]",
+  },
+  violet: {
+    outer: "from-violet-900/40 via-slate-900 to-purple-900/40",
+    border: "border-violet-500/20",
+    blob1: "bg-violet-500/10",
+    blob2: "bg-purple-600/10",
+    badge: "bg-violet-500/20 text-violet-400",
+    titleAccent: "text-gradient-volt",
+    btn: "bg-violet-500 hover:bg-violet-400 shadow-[0_0_25px_rgba(124,58,237,0.4)] hover:shadow-[0_0_40px_rgba(124,58,237,0.6)]",
+  },
+  amber: {
+    outer: "from-amber-900/30 via-slate-900 to-orange-900/30",
+    border: "border-amber-500/20",
+    blob1: "bg-amber-500/10",
+    blob2: "bg-orange-600/10",
+    badge: "bg-amber-500/20 text-amber-400",
+    titleAccent: "text-amber-400",
+    btn: "bg-amber-500 hover:bg-amber-400 shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:shadow-[0_0_40px_rgba(245,158,11,0.6)]",
+  },
+  rose: {
+    outer: "from-rose-900/30 via-slate-900 to-pink-900/30",
+    border: "border-rose-500/20",
+    blob1: "bg-rose-500/10",
+    blob2: "bg-pink-600/10",
+    badge: "bg-rose-500/20 text-rose-400",
+    titleAccent: "text-rose-400",
+    btn: "bg-rose-500 hover:bg-rose-400 shadow-[0_0_25px_rgba(244,63,94,0.4)] hover:shadow-[0_0_40px_rgba(244,63,94,0.6)]",
+  },
+} as const;
+
 // ─────────────────────────────────────────────────────────────
 // PAGE  (Server Component — all fetches run in parallel)
 // ─────────────────────────────────────────────────────────────
@@ -79,9 +119,6 @@ export default async function HomePage() {
     getFeaturedCategories(),
     getActiveBanners(),
   ]);
-
-  // Active banner (first one) — falls back to static copy
-  const promoBanner: SanityBanner | null = banners[0] ?? null;
 
   const homeJsonLd = {
     "@context": "https://schema.org",
@@ -375,65 +412,11 @@ export default async function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════════════
-          PROMO BANNER  — from Sanity (fallback to static)
-      ══════════════════════════════════════════════════ */}
+PROMO BANNER
+══════════════════════════════════════════════════ */}
       <section className="section-padding bg-slate-950">
         <div className="container-app">
-          <div className="relative overflow-hidden rounded-3xl
-            bg-gradient-to-br from-cyan-900/40 via-slate-900 to-violet-900/40
-            border border-cyan-500/20 p-8 md:p-14">
-
-            {/* Blobs */}
-            <div aria-hidden className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-violet-600/10 blur-3xl" />
-            </div>
-
-            <div className="relative grid md:grid-cols-2 gap-8 items-center">
-              <SlideInLeft>
-                <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/20
-                  text-cyan-400 text-xs font-bold tracking-widest uppercase mb-4">
-                  {promoBanner?.badgeText ?? "Limited Time Offer"}
-                </span>
-                <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-50 mb-4">
-                  {promoBanner?.title ?? (
-                    <>
-                      Up to <span className="text-gradient-cyan">30% Off</span>
-                      <br />Flagship Phones
-                    </>
-                  )}
-                </h2>
-                <p className="text-slate-400 mb-6">
-                  {promoBanner?.subtitle ??
-                    "Get the latest flagships at incredible prices. Free delivery on all phone orders this weekend only."}
-                </p>
-                <Link
-                  href={promoBanner?.ctaHref ?? "/products?category=phones"}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                    bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold
-                    shadow-[0_0_25px_rgba(6,182,212,0.4)]
-                    hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]
-                    transition-all duration-200"
-                >
-                  {promoBanner?.ctaLabel ?? "Shop Phones"} <ArrowRight size={16} />
-                </Link>
-              </SlideInLeft>
-
-              <SlideInRight>
-                <div className="grid grid-cols-2 gap-4">
-                  {STATS.map(({ value, label }) => (
-                    <div
-                      key={label}
-                      className="p-5 rounded-2xl bg-slate-900/60 border border-slate-700/50 text-center"
-                    >
-                      <p className="text-2xl font-black text-gradient-cyan">{value}</p>
-                      <p className="text-xs text-slate-500 mt-1">{label}</p>
-                    </div>
-                  ))}
-                </div>
-              </SlideInRight>
-            </div>
-          </div>
+          <PromoBannerSection banners={banners} />
         </div>
       </section>
 
