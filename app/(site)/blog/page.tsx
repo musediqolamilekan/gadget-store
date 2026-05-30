@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Clock, Tag, BookOpen, ChevronRight } from "lucide-react";
+import { ArrowRight, Clock, BookOpen, ChevronRight } from "lucide-react";
 import { getAllPosts } from "@/sanity/lib/fetch";
 import type { SanityPost } from "@/sanity/lib/fetch";
 import BlogListClient from "./BlogListClient";
@@ -45,14 +45,15 @@ const CATEGORY_LABELS: Record<string, string> = {
   "accessories": "Accessories",
 };
 
+// Light-mode safe category colours — tinted bg on white
 const CATEGORY_COLORS: Record<string, string> = {
-  "phone-reviews": "bg-cyan-500/15 text-cyan-400 border-cyan-500/20",
-  "laptop-reviews": "bg-violet-500/15 text-violet-400 border-violet-500/20",
-  "buying-guides": "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-  "tips-tricks": "bg-amber-500/15 text-amber-400 border-amber-500/20",
-  "comparisons": "bg-rose-500/15 text-rose-400 border-rose-500/20",
-  "news-deals": "bg-orange-500/15 text-orange-400 border-orange-500/20",
-  "accessories": "bg-slate-500/15 text-slate-400 border-slate-500/20",
+  "phone-reviews": "bg-cyan-50    text-cyan-700    border border-cyan-200",
+  "laptop-reviews": "bg-violet-50  text-violet-700  border border-violet-200",
+  "buying-guides": "bg-emerald-50 text-emerald-700 border border-emerald-200",
+  "tips-tricks": "bg-amber-50   text-amber-700   border border-amber-200",
+  "comparisons": "bg-rose-50    text-rose-700    border border-rose-200",
+  "news-deals": "bg-orange-50  text-orange-700  border border-orange-200",
+  "accessories": "bg-bg-muted   text-text-muted  border border-border",
 };
 
 function formatDate(iso: string) {
@@ -63,81 +64,79 @@ function formatDate(iso: string) {
   });
 }
 
-function categoryBadge(category: string) {
-  return CATEGORY_LABELS[category] ?? category;
-}
-
-function categoryColor(category: string) {
-  return (
-    CATEGORY_COLORS[category] ??
-    "bg-slate-500/15 text-slate-400 border-slate-500/20"
-  );
-}
+const categoryBadge = (c: string) => CATEGORY_LABELS[c] ?? c;
+const categoryColor = (c: string) =>
+  CATEGORY_COLORS[c] ?? "bg-bg-muted text-text-muted border border-border";
 
 // ─────────────────────────────────────────────────────────────
 // FEATURED POST CARD
 // ─────────────────────────────────────────────────────────────
 function FeaturedCard({ post }: { post: SanityPost }) {
   const imgUrl = post.coverImage?.url ?? null;
+
   return (
     <Link
       href={`/blog/${post.slug}`}
       className="group grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden
-        bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40
+        card hover:shadow-card-hover hover:border-primary-200
         transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative h-56 md:h-full bg-slate-800 overflow-hidden">
+      <div className="relative h-56 md:h-full bg-bg-muted overflow-hidden">
         {imgUrl ? (
           <Image
             src={imgUrl}
             alt={post.coverImage?.alt ?? post.title}
             fill
             sizes="(max-width:768px) 100vw, 50vw"
-            className="object-cover group-hover:scale-105 transition-transform
-              duration-500"
+            className="object-cover group-hover:scale-105
+              transition-transform duration-500"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <BookOpen size={40} className="text-slate-600" />
+            <BookOpen size={40} className="text-text-faint" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60
-          via-transparent to-transparent md:bg-gradient-to-r" />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t
+          from-bg/40 via-transparent to-transparent
+          md:bg-gradient-to-r md:from-transparent md:to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="p-6 md:p-8 flex flex-col justify-between">
+      <div className="p-6 md:p-8 flex flex-col justify-between bg-bg">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold
-              uppercase tracking-widest border
-              ${categoryColor(post.category)}`}>
+              uppercase tracking-widest ${categoryColor(post.category)}`}>
               {categoryBadge(post.category)}
             </span>
-            <span className="text-[10px] text-slate-500 uppercase tracking-widest
-              font-semibold">
+            <span className="text-[10px] text-primary-500 uppercase
+              tracking-widest font-bold">
               Featured
             </span>
           </div>
-          <h2 className="text-xl md:text-2xl font-black text-slate-50
-            leading-snug mb-3 group-hover:text-cyan-300 transition-colors">
+
+          <h2 className="text-xl md:text-2xl font-black text-text
+            leading-snug mb-3 group-hover:text-primary-600 transition-colors">
             {post.title}
           </h2>
-          <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
+
+          <p className="text-text-muted text-sm leading-relaxed line-clamp-3">
             {post.excerpt}
           </p>
         </div>
+
         <div className="flex items-center justify-between mt-6">
-          <div className="flex items-center gap-3 text-xs text-slate-500">
+          <div className="flex items-center gap-3 text-xs text-text-faint">
             <span>{formatDate(post.publishedAt)}</span>
             <span>·</span>
             <span className="flex items-center gap-1">
               <Clock size={11} /> {post.readingTime} min read
             </span>
           </div>
-          <span className="flex items-center gap-1 text-xs font-semibold
-            text-cyan-400 group-hover:gap-2 transition-all">
+          <span className="flex items-center gap-1 text-xs font-bold
+            text-primary-500 group-hover:gap-2 transition-all">
             Read <ArrowRight size={12} />
           </span>
         </div>
@@ -169,10 +168,7 @@ export default async function BlogPage() {
       description: p.excerpt,
       datePublished: p.publishedAt,
       url: `https://horlarzgadgets.com/blog/${p.slug}`,
-      author: {
-        "@type": "Organization",
-        name: "HolarzGadgets",
-      },
+      author: { "@type": "Organization", name: "HolarzGadgets" },
     })),
   };
 
@@ -183,52 +179,49 @@ export default async function BlogPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="min-h-screen bg-slate-950">
+      <div className="min-h-screen bg-bg">
 
-        {/* ── Hero ──────────────────────────────────── */}
-        <section className="relative overflow-hidden bg-slate-900/50
-          border-b border-slate-800/60">
-          <div aria-hidden className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 left-0 w-96 h-96 rounded-full
-              bg-cyan-500/5 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full
-              bg-violet-500/5 blur-3xl" />
-          </div>
+        {/* ── Hero header ─────────────────────────────── */}
+        <section className="bg-bg-subtle border-b border-border">
+          <div className="container-app py-14">
 
-          <div className="container-app py-14 relative">
+            {/* Breadcrumb */}
             <nav aria-label="Breadcrumb"
-              className="flex items-center gap-1.5 text-xs text-slate-500 mb-8">
-              <Link href="/" className="hover:text-slate-300 transition-colors">
+              className="flex items-center gap-1.5 text-xs text-text-faint mb-8">
+              <Link href="/" className="hover:text-text transition-colors">
                 Home
               </Link>
               <ChevronRight size={12} />
-              <span className="text-slate-400">Blog</span>
+              <span className="text-text-muted">Blog</span>
             </nav>
 
             <div className="flex items-end justify-between flex-wrap gap-4">
               <div>
                 <p className="text-xs font-bold tracking-widest uppercase
-                  text-cyan-400/80 mb-2">
+                  text-primary-500 mb-2">
                   HolarzGadgets Blog
                 </p>
                 <h1 className="text-3xl md:text-4xl font-black tracking-tight
-                  text-slate-50 mb-2">
+                  text-text mb-2">
                   Gadget Reviews &{" "}
-                  <span className="text-gradient-cyan">Buying Guides</span>
+                  <span className="text-gradient-primary">Buying Guides</span>
                 </h1>
-                <p className="text-slate-400 text-sm">
+                <p className="text-text-muted text-sm max-w-lg">
                   Expert tips to help you buy the best gadgets in Nigeria
                   — written for Ekiti and beyond.
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <BookOpen size={13} />
+
+              <div className="flex items-center gap-2 text-xs text-text-faint
+                bg-bg border border-border rounded-xl px-3 py-2">
+                <BookOpen size={13} className="text-primary-500" />
                 {posts.length} articles
               </div>
             </div>
           </div>
         </section>
 
+        {/* ── Content ─────────────────────────────────── */}
         <div className="container-app py-12">
           {featured.length > 0 && (
             <div className="mb-12">

@@ -188,8 +188,8 @@ export const ALL_BRANDS_QUERY = groq`
     _id,
     name,
     "slug": slug.current,
-    logo,
-    isFeatured
+    isFeatured,
+    "logoUrl": logo.asset->url
   }
 `;
 

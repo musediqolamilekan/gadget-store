@@ -1,296 +1,329 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import Link        from "next/link";
+import Image       from "next/image";
+import { ArrowRight, ChevronLeft, ChevronRight, ShoppingBag, Star } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
 
 import type { SanityBanner } from "@/sanity/lib/types";
-import { urlForString } from "@/sanity/lib/client";
+import { urlForString }      from "@/sanity/lib/client";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
+// ─────────────────────────────────────────────────────────────
+// ACCENT MAP — per banner colour
+// ─────────────────────────────────────────────────────────────
 const ACCENT = {
   cyan: {
-    outer: "from-cyan-900/40 via-slate-900 to-violet-900/40",
-    border: "border-cyan-500/20",
-    blob1: "bg-cyan-500/10",
-    blob2: "bg-violet-600/10",
-    badge: "bg-cyan-500/20 text-cyan-400",
-    title: "text-cyan-400",
-    btn: "bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]",
+    badge:       "bg-cyan-500/15 text-cyan-600 border border-cyan-500/30",
+    heading:     "text-cyan-500",
+    btn:         "bg-cyan-500 hover:bg-cyan-600 text-white shadow-[0_4px_20px_rgb(var(--color-accent-cyan)/35%)]",
+    btnOutline:  "border-cyan-500/40 text-cyan-600 hover:bg-cyan-50",
+    dot:         "bg-cyan-500",
+    glow:        "from-cyan-500/10 via-transparent to-violet-500/10",
+    imageBorder: "border-cyan-500/20",
+    statAccent:  "text-cyan-600",
   },
-
   violet: {
-    outer: "from-violet-900/40 via-slate-900 to-purple-900/40",
-    border: "border-violet-500/20",
-    blob1: "bg-violet-500/10",
-    blob2: "bg-purple-600/10",
-    badge: "bg-violet-500/20 text-violet-400",
-    title: "text-violet-400",
-    btn: "bg-violet-500 hover:bg-violet-400 shadow-[0_0_25px_rgba(124,58,237,0.4)] hover:shadow-[0_0_40px_rgba(124,58,237,0.6)]",
+    badge:       "bg-violet-500/15 text-violet-600 border border-violet-500/30",
+    heading:     "text-violet-500",
+    btn:         "bg-violet-500 hover:bg-violet-600 text-white shadow-[0_4px_20px_rgb(var(--color-accent-violet)/35%)]",
+    btnOutline:  "border-violet-500/40 text-violet-600 hover:bg-violet-50",
+    dot:         "bg-violet-500",
+    glow:        "from-violet-500/10 via-transparent to-purple-500/10",
+    imageBorder: "border-violet-500/20",
+    statAccent:  "text-violet-600",
   },
-
   amber: {
-    outer: "from-amber-900/30 via-slate-900 to-orange-900/30",
-    border: "border-amber-500/20",
-    blob1: "bg-amber-500/10",
-    blob2: "bg-orange-600/10",
-    badge: "bg-amber-500/20 text-amber-400",
-    title: "text-amber-400",
-    btn: "bg-amber-500 hover:bg-amber-400 shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:shadow-[0_0_40px_rgba(245,158,11,0.6)]",
+    badge:       "bg-amber-500/15 text-amber-700 border border-amber-500/30",
+    heading:     "text-amber-600",
+    btn:         "bg-amber-500 hover:bg-amber-600 text-white shadow-[0_4px_20px_rgb(var(--color-accent-amber)/35%)]",
+    btnOutline:  "border-amber-500/40 text-amber-700 hover:bg-amber-50",
+    dot:         "bg-amber-500",
+    glow:        "from-amber-500/10 via-transparent to-orange-500/10",
+    imageBorder: "border-amber-500/20",
+    statAccent:  "text-amber-600",
   },
-
   rose: {
-    outer: "from-rose-900/30 via-slate-900 to-pink-900/30",
-    border: "border-rose-500/20",
-    blob1: "bg-rose-500/10",
-    blob2: "bg-pink-600/10",
-    badge: "bg-rose-500/20 text-rose-400",
-    title: "text-rose-400",
-    btn: "bg-rose-500 hover:bg-rose-400 shadow-[0_0_25px_rgba(244,63,94,0.4)] hover:shadow-[0_0_40px_rgba(244,63,94,0.6)]",
+    badge:       "bg-rose-500/15 text-rose-600 border border-rose-500/30",
+    heading:     "text-rose-500",
+    btn:         "bg-rose-500 hover:bg-rose-600 text-white shadow-[0_4px_20px_rgb(var(--color-accent-rose)/35%)]",
+    btnOutline:  "border-rose-500/40 text-rose-600 hover:bg-rose-50",
+    dot:         "bg-rose-500",
+    glow:        "from-rose-500/10 via-transparent to-pink-500/10",
+    imageBorder: "border-rose-500/20",
+    statAccent:  "text-rose-600",
+  },
+  primary: {
+    badge:       "bg-primary-50 text-primary-700 border border-primary-200",
+    heading:     "text-primary-500",
+    btn:         "bg-primary-500 hover:bg-primary-600 text-white glow-primary",
+    btnOutline:  "border-primary-300 text-primary-600 hover:bg-primary-50",
+    dot:         "bg-primary-500",
+    glow:        "from-primary-500/8 via-transparent to-primary-300/8",
+    imageBorder: "border-primary-200",
+    statAccent:  "text-primary-600",
   },
 } as const;
 
 type AccentKey = keyof typeof ACCENT;
 
 const STATS = [
-  { value: "1,200+", label: "Happy Customers" },
-  { value: "500+", label: "Products" },
-  { value: "4.9★", label: "Average Rating" },
-  { value: "24/7", label: "Expert Support" },
+  { value: "1,200+", label: "Happy Customers", Icon: Star       },
+  { value: "500+",   label: "Products",         Icon: ShoppingBag },
+  { value: "4.9★",   label: "Avg Rating",       Icon: Star       },
+  { value: "24/7",   label: "Support",          Icon: ShoppingBag },
 ];
 
 interface Props {
   banners: SanityBanner[];
+  stats?:  { value: string; label: string }[];
 }
 
-export default function PromoBanner({ banners }: Props) {
-  const safeBanners = banners?.length ? banners : [null];
+// ─────────────────────────────────────────────────────────────
+// SLIDE
+// ─────────────────────────────────────────────────────────────
+function BannerSlide({
+  banner,
+  a,
+  active,
+}: {
+  banner: SanityBanner | null;
+  a:      (typeof ACCENT)[AccentKey];
+  active: boolean;
+}) {
+  const imgUrl = banner?.image
+    ? urlForString(banner.image, 1200, 900, 100)
+    : null;
 
   return (
-    <div className="relative">
-      <Swiper
-        modules={[Autoplay, Pagination, Navigation]}
-        slidesPerView={1}
-        spaceBetween={24}
-        loop={safeBanners.length > 1}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={{
-          nextEl: ".promo-next",
-          prevEl: ".promo-prev",
-        }}
-        className="promo-banner-swiper"
-      >
-        {safeBanners.map((banner: SanityBanner | null, index) => {
-          const accentKey = (banner?.accentColor ??
-            "cyan") as AccentKey;
+    <AnimatePresence mode="wait">
+      {active && (
+        <motion.div
+          key={banner?._id ?? "fallback"}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{   opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center
+            min-h-[320px] md:min-h-[400px]"
+        >
+          {/* ── Left: text ──────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, x: -32 }}
+            animate={{ opacity: 1, x:   0 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.22,1,0.36,1] }}
+          >
+            {/* Badge */}
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1
+              rounded-full text-[10px] font-black tracking-[0.15em]
+              uppercase mb-5 ${a.badge}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${a.dot}`} />
+              {banner?.badgeText ?? "Limited Time Offer"}
+            </span>
 
-          const a = ACCENT[accentKey] ?? ACCENT.cyan;
+            {/* Headline */}
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black
+              tracking-tight text-text leading-[1.1] mb-4">
+              {banner?.title ? (
+                <>
+                  {banner.title.split(" ").slice(0, -2).join(" ")}{" "}
+                  <span className={a.heading}>
+                    {banner.title.split(" ").slice(-2).join(" ")}
+                  </span>
+                </>
+              ) : (
+                <>
+                  Up to{" "}
+                  <span className={a.heading}>30% Off</span>
+                  <br />Flagship Phones
+                </>
+              )}
+            </h2>
 
-          return (
-            <SwiperSlide key={banner?._id ?? index}>
-              <div
-                className={`relative overflow-hidden rounded-3xl
-                bg-gradient-to-br ${a.outer}
-                border ${a.border} p-8 md:p-14`}
-              >
-                <div
-                  aria-hidden
-                  className="absolute inset-0 pointer-events-none"
+            {/* Subtitle */}
+            <p className="text-text-muted text-base leading-relaxed mb-8 max-w-md">
+              {banner?.subtitle ??
+                "Get the latest flagships at incredible prices. Free delivery on all phone orders this weekend only."}
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-3">
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Link
+                  href={banner?.ctaHref ?? "/products?category=phones"}
+                  className={`inline-flex items-center gap-2 px-6 py-3.5
+                    rounded-xl font-bold text-sm transition-all duration-200
+                    ${a.btn}`}
                 >
-                  <div
-                    className={`absolute top-0 right-0 w-72 h-72 rounded-full
-                    ${a.blob1} blur-3xl`}
-                  />
+                  {banner?.ctaLabel ?? "Shop Now"}
+                  <ArrowRight size={15} />
+                </Link>
+              </motion.div>
+              <Link
+                href="/products"
+                className={`inline-flex items-center gap-2 px-6 py-3.5
+                  rounded-xl font-semibold text-sm border
+                  transition-all duration-200 text-text-muted
+                  hover:bg-bg-muted border-border`}
+              >
+                Browse All
+              </Link>
+            </div>
+          </motion.div>
 
-                  <div
-                    className={`absolute bottom-0 left-0 w-72 h-72 rounded-full
-                    ${a.blob2} blur-3xl`}
-                  />
-                </div>
-                <div className="relative grid md:grid-cols-2 gap-10 items-center">
-                  <motion.div
-                    initial={{ opacity: 0, x: -40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{
-                      duration: 0.6,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs
-                      font-bold tracking-widest uppercase mb-4 ${a.badge}`}
-                    >
-                      {banner?.badgeText ?? "Limited Time Offer"}
+          {/* ── Right: image or stats ────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, x: 32 }}
+            animate={{ opacity: 1, x:  0 }}
+            transition={{ duration: 0.55, delay: 0.15, ease: [0.22,1,0.36,1] }}
+            className="relative"
+          >
+            {imgUrl ? (
+              <div className="relative">
+                {/* Decorative ring */}
+                <div className={`absolute -inset-3 rounded-[2rem]
+                  bg-gradient-to-br ${a.glow} blur-xl`} />
+                {/* Image card */}
+                <div className={`relative rounded-3xl overflow-hidden
+                  border-2 ${a.imageBorder} shadow-card-hover`}>
+                  {/* Featured tag */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className={`px-3 py-1.5 rounded-full text-[10px]
+                      font-black tracking-widest uppercase
+                      backdrop-blur-md ${a.badge}`}>
+                      Featured Deal
                     </span>
-
-                    <h2
-                      className="text-3xl md:text-5xl font-black tracking-tight
-                      text-slate-50 mb-4 leading-tight"
-                    >
-                      {banner?.title ? (
-                        <>
-                          {banner.title
-                            .split(" ")
-                            .slice(0, -2)
-                            .join(" ")}{" "}
-                          <span className={a.title}>
-                            {banner.title
-                              .split(" ")
-                              .slice(-2)
-                              .join(" ")}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          Up to{" "}
-                          <span className={a.title}>
-                            30% Off
-                          </span>
-                          <br />
-                          Flagship Phones
-                        </>
-                      )}
-                    </h2>
-
-                    <p className="text-slate-400 mb-8 leading-relaxed max-w-xl">
-                      {banner?.subtitle ??
-                        "Get the latest flagships at incredible prices. Free delivery on all phone orders this weekend only."}
-                    </p>
-
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      <Link
-                        href={
-                          banner?.ctaHref ??
-                          "/products?category=phones"
-                        }
-                        className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                        text-slate-950 font-bold transition-all duration-200 ${a.btn}`}
-                      >
-                        {banner?.ctaLabel ?? "Shop Phones"}
-                        <ArrowRight size={16} />
-                      </Link>
-                    </motion.div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: 40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{
-                      duration: 0.6,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    {banner?.image ? (
-                      <div className="relative">
-                        <div
-                          className="relative h-[320px] md:h-[420px]
-                          rounded-3xl overflow-hidden border border-slate-800"
-                        >
-                          <Image
-                            src={urlForString(
-                              banner.image,
-                              1200,
-                              900,
-                              100
-                            )}
-                            alt={banner.title ?? "Promo Banner"}
-                            fill
-                            priority
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover"
-                          />
-
-                          <div
-                            className="absolute inset-0 bg-gradient-to-t
-                            from-slate-950/60 via-transparent to-transparent"
-                          />
-
-                          <div className="absolute top-4 left-4">
-                            <span
-                              className={`px-3 py-1 rounded-full text-xs font-bold
-                              uppercase tracking-widest backdrop-blur-md ${a.badge}`}
-                            >
-                              Featured Deal
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 gap-4">
-                        {STATS.map(({ value, label }, i) => (
-                          <motion.div
-                            key={label}
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{
-                              delay: i * 0.08,
-                              duration: 0.4,
-                            }}
-                            className="p-5 rounded-2xl bg-slate-900/60 border
-                            border-slate-700/50 text-center"
-                          >
-                            <p
-                              className={`text-2xl font-black ${a.title}`}
-                            >
-                              {value}
-                            </p>
-
-                            <p className="text-xs text-slate-500 mt-1">
-                              {label}
-                            </p>
-                          </motion.div>
-                        ))}
-                      </div>
-                    )}
-                  </motion.div>
+                  </div>
+                  <Image
+                    src={imgUrl}
+                    alt={banner?.title ?? "Promo Banner"}
+                    width={600}
+                    height={400}
+                    priority
+                    className="w-full h-[260px] md:h-[360px] object-cover"
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t
+                    from-bg/40 via-transparent to-transparent" />
                 </div>
               </div>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+            ) : (
+              /* Stats grid fallback */
+              <div className="grid grid-cols-2 gap-3">
+                {STATS.map(({ value, label }, i) => (
+                  <motion.div
+                    key={label}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y:  0 }}
+                    transition={{ delay: 0.2 + i * 0.07, duration: 0.4 }}
+                    className="card p-5 text-center hover:shadow-card-hover
+                      transition-shadow duration-300"
+                  >
+                    <p className={`text-2xl font-black ${a.statAccent}`}>
+                      {value}
+                    </p>
+                    <p className="text-xs text-text-faint mt-1">{label}</p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
-      <button
-        className="promo-prev absolute left-3 md:left-5 top-1/2
-        -translate-y-1/2 z-50 w-11 h-11 rounded-full
-        bg-slate-900/80 border border-slate-700
-        text-slate-200 backdrop-blur-md
-        hover:bg-slate-800 transition-all duration-200
-        flex items-center justify-center"
-      >
-        <ChevronLeft size={20} />
-      </button>
+// ─────────────────────────────────────────────────────────────
+// MAIN COMPONENT
+// ─────────────────────────────────────────────────────────────
+export default function PromoBannerSection({ banners }: Props) {
+  const safeBanners = banners?.length ? banners : [null];
+  const [current, setCurrent] = useState(0);
+  const [paused,  setPaused]  = useState(false);
+  const total = safeBanners.length;
 
-      <button
-        className="promo-next absolute right-3 md:right-5 top-1/2
-        -translate-y-1/2 z-50 w-11 h-11 rounded-full
-        bg-slate-900/80 border border-slate-700
-        text-slate-200 backdrop-blur-md
-        hover:bg-slate-800 transition-all duration-200
-        flex items-center justify-center"
-      >
-        <ChevronRight size={20} />
-      </button>
+  const next = useCallback(() =>
+    setCurrent((c) => (c + 1) % total), [total]);
+  const prev = useCallback(() =>
+    setCurrent((c) => (c - 1 + total) % total), [total]);
+
+  // Auto-advance
+  useEffect(() => {
+    if (paused || total <= 1) return;
+    const t = setInterval(next, 5000);
+    return () => clearInterval(t);
+  }, [paused, total, next]);
+
+  const banner    = safeBanners[current];
+  const accentKey = ((banner as SanityBanner | null)?.accentColor ?? "primary") as AccentKey;
+  const a         = ACCENT[accentKey] ?? ACCENT.primary;
+
+  return (
+    <div
+      className="relative bg-bg-subtle border-b border-border"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* ── Subtle background glow ──────────────────────── */}
+      <div aria-hidden
+        className={`absolute inset-0 bg-gradient-to-r ${a.glow}
+          pointer-events-none transition-all duration-700`} />
+
+      {/* ── Content ─────────────────────────────────────── */}
+      <div className="container-app py-10 md:py-14 relative">
+        <BannerSlide
+          banner={banner as SanityBanner | null}
+          a={a}
+          active={true}
+        />
+      </div>
+
+      {/* ── Navigation arrows ───────────────────────────── */}
+      {total > 1 && (
+        <>
+          <button
+            onClick={prev}
+            aria-label="Previous banner"
+            className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2
+              z-10 w-10 h-10 rounded-full bg-bg border border-border
+              text-text-muted hover:text-text hover:border-border-strong
+              shadow-card flex items-center justify-center
+              transition-all duration-200"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            onClick={next}
+            aria-label="Next banner"
+            className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2
+              z-10 w-10 h-10 rounded-full bg-bg border border-border
+              text-text-muted hover:text-text hover:border-border-strong
+              shadow-card flex items-center justify-center
+              transition-all duration-200"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </>
+      )}
+
+      {/* ── Dot indicators ──────────────────────────────── */}
+      {total > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2
+          flex items-center gap-1.5 z-10">
+          {safeBanners.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`rounded-full transition-all duration-300
+                ${i === current
+                  ? `w-6 h-2 ${a.dot}`
+                  : "w-2 h-2 bg-border-strong hover:bg-text-faint"}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

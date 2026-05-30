@@ -155,8 +155,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body
-        className="min-h-screen bg-slate-950 text-slate-200 font-inter
-          antialiased selection:bg-cyan-500/30 selection:text-cyan-200"
+        className="min-h-screen antialiased"
       >
         <CartProvider>
           <NavbarServer />

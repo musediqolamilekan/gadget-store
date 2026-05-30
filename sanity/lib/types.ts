@@ -72,10 +72,9 @@ export interface SanityBrand {
   _id: string;
   name: string;
   slug: string;
-  logo?: { asset: { _ref: string } };
   isFeatured: boolean;
+  logoUrl?: string | null;   // ← resolved directly as a string
 }
-
 // ── Banner ───────────────────────────────────────────────────
 export interface SanityBanner {
   _id: string;
@@ -101,28 +100,28 @@ export function toProduct(p: SanityProductCard): Product {
       : (p.category as string);
 
   return {
-    id:               p._id,
-    name:             p.name,
-    slug:             p.slug,
-    brand:            p.brand?.name ?? "",
-    category:         categorySlug as ProductCategory,
-    price:            p.price,
-    discountPrice:    p.discountPrice,
+    id: p._id,
+    name: p.name,
+    slug: p.slug,
+    brand: p.brand?.name ?? "",
+    category: categorySlug as ProductCategory,
+    price: p.price,
+    discountPrice: p.discountPrice,
     shortDescription: p.shortDescription,
-    description:      "",
+    description: "",
     images: p.images.map((img) => ({
-      url:       img.url,
-      alt:       img.alt,
+      url: img.url,
+      alt: img.alt,
       isPrimary: img.isPrimary,
     })),
-    specs:        {},
-    rating:       p.rating,
-    reviewCount:  p.reviewCount,
-    stockCount:   p.stockCount,
-    isFeatured:   p.isFeatured,
-    isNew:        p.isNew,
+    specs: {},
+    rating: p.rating,
+    reviewCount: p.reviewCount,
+    stockCount: p.stockCount,
+    isFeatured: p.isFeatured,
+    isNew: p.isNew,
     isBestseller: p.isBestseller,
-    tags:         p.tags ?? [],
+    tags: p.tags ?? [],
   };
 }
 

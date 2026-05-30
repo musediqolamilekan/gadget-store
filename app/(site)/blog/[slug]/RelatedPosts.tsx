@@ -6,25 +6,30 @@ import { Clock, ArrowRight, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import type { SanityPost } from "@/sanity/lib/fetch";
 
+// Light-mode tints — consistent with blog/page.tsx and BlogListClient
 const CATEGORY_COLORS: Record<string, string> = {
-  "phone-reviews":  "bg-cyan-500/15 text-cyan-400 border-cyan-500/20",
-  "laptop-reviews": "bg-violet-500/15 text-violet-400 border-violet-500/20",
-  "buying-guides":  "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-  "tips-tricks":    "bg-amber-500/15 text-amber-400 border-amber-500/20",
-  "comparisons":    "bg-rose-500/15 text-rose-400 border-rose-500/20",
-  "news-deals":     "bg-orange-500/15 text-orange-400 border-orange-500/20",
-  "accessories":    "bg-slate-500/15 text-slate-400 border-slate-500/20",
+  "phone-reviews": "bg-cyan-50    text-cyan-700    border border-cyan-200",
+  "laptop-reviews": "bg-violet-50  text-violet-700  border border-violet-200",
+  "buying-guides": "bg-emerald-50 text-emerald-700 border border-emerald-200",
+  "tips-tricks": "bg-amber-50   text-amber-700   border border-amber-200",
+  "comparisons": "bg-rose-50    text-rose-700    border border-rose-200",
+  "news-deals": "bg-orange-50  text-orange-700  border border-orange-200",
+  "accessories": "bg-bg-muted   text-text-muted  border border-border",
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
-  "phone-reviews":  "Phone Reviews",
+  "phone-reviews": "Phone Reviews",
   "laptop-reviews": "Laptop Reviews",
-  "buying-guides":  "Buying Guides",
-  "tips-tricks":    "Tips & Tricks",
-  "comparisons":    "Comparisons",
-  "news-deals":     "News & Deals",
-  "accessories":    "Accessories",
+  "buying-guides": "Buying Guides",
+  "tips-tricks": "Tips & Tricks",
+  "comparisons": "Comparisons",
+  "news-deals": "News & Deals",
+  "accessories": "Accessories",
 };
+
+const catColor = (c: string) =>
+  CATEGORY_COLORS[c] ?? "bg-bg-muted text-text-muted border border-border";
+const catLabel = (c: string) => CATEGORY_LABELS[c] ?? c;
 
 export default function RelatedPosts({ posts }: { posts: SanityPost[] }) {
   return (
@@ -35,14 +40,15 @@ export default function RelatedPosts({ posts }: { posts: SanityPost[] }) {
           <motion.article
             key={post._id}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0  }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1, duration: 0.4 }}
             className="group flex flex-col rounded-2xl overflow-hidden
-              bg-slate-900/60 border border-slate-800
-              hover:border-slate-600 transition-all duration-300"
+              card hover:shadow-card-hover hover:border-primary-200
+              transition-all duration-300"
           >
+            {/* Cover */}
             <Link href={`/blog/${post.slug}`} className="block">
-              <div className="relative h-40 bg-slate-800 overflow-hidden">
+              <div className="relative h-40 bg-bg-muted overflow-hidden">
                 {imgUrl ? (
                   <Image
                     src={imgUrl}
@@ -54,39 +60,40 @@ export default function RelatedPosts({ posts }: { posts: SanityPost[] }) {
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center
-                    justify-center">
-                    <BookOpen size={24} className="text-slate-600" />
+                    justify-center bg-bg-muted">
+                    <BookOpen size={24} className="text-text-faint" />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t
-                  from-slate-950/50 via-transparent to-transparent" />
+                  from-bg/30 via-transparent to-transparent" />
               </div>
             </Link>
 
+            {/* Body */}
             <div className="flex flex-col flex-1 p-4">
-              <span className={`self-start px-2 py-0.5 rounded-full text-[9px]
-                font-bold uppercase tracking-widest border mb-2
-                ${CATEGORY_COLORS[post.category] ?? "bg-slate-500/15 text-slate-400 border-slate-500/20"}`}>
-                {CATEGORY_LABELS[post.category] ?? post.category}
+              <span className={`self-start px-2 py-0.5 rounded-full
+                text-[9px] font-bold uppercase tracking-widest mb-2
+                ${catColor(post.category)}`}>
+                {catLabel(post.category)}
               </span>
 
               <Link href={`/blog/${post.slug}`}>
-                <h3 className="text-sm font-bold text-slate-200 leading-snug
-                  hover:text-cyan-300 transition-colors line-clamp-2 mb-2">
+                <h3 className="text-sm font-bold text-text leading-snug
+                  hover:text-primary-600 transition-colors line-clamp-2 mb-2">
                   {post.title}
                 </h3>
               </Link>
 
               <div className="flex items-center justify-between mt-auto pt-3
-                border-t border-slate-800/60">
+                border-t border-border">
                 <span className="flex items-center gap-1 text-[10px]
-                  text-slate-600">
+                  text-text-faint">
                   <Clock size={9} /> {post.readingTime}m read
                 </span>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="flex items-center gap-1 text-[10px] font-semibold
-                    text-cyan-400 hover:text-cyan-300 transition-colors"
+                  className="flex items-center gap-1 text-[10px] font-bold
+                    text-primary-500 hover:text-primary-600 transition-colors"
                 >
                   Read <ArrowRight size={10} />
                 </Link>
