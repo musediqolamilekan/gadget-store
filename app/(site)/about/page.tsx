@@ -81,29 +81,29 @@ const VALUES = [
         Icon: ShieldCheck,
         title: "100% Originality",
         desc: "Every product we sell is genuine and sourced from authorised distributors. No refurbished, no clones — ever.",
-        color: "text-cyan-400",
-        bg: "bg-cyan-500/10",
+        color: "text-accent-cyan",
+        bg: "bg-accent-cyan/10",
     },
     {
         Icon: Truck,
         title: "Fast Nationwide Delivery",
         desc: "We deliver to all 36 states in Nigeria. Orders within Ado-Ekiti may qualify for same-day or next-day delivery.",
-        color: "text-violet-400",
-        bg: "bg-violet-500/10",
+        color: "text-accent-violet",
+        bg: "bg-accent-violet/10",
     },
     {
         Icon: Headset,
         title: "Dedicated Support",
         desc: "Our team is available Monday to Saturday on WhatsApp. We don't disappear after the sale.",
-        color: "text-emerald-400",
-        bg: "bg-emerald-500/10",
+        color: "text-accent-green",
+        bg: "bg-accent-green/10",
     },
     {
         Icon: BadgeCheck,
         title: "Competitive Pricing",
         desc: "We work directly with trusted suppliers to offer the best prices in Ekiti and across Nigeria — no middlemen.",
-        color: "text-amber-400",
-        bg: "bg-amber-500/10",
+        color: "text-accent-amber",
+        bg: "bg-accent-amber/10",
     },
 ];
 
@@ -195,22 +195,22 @@ export default function AboutPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
-            <div className="min-h-screen bg-slate-950">
+            <div className="min-h-screen bg-bg">
 
                 {/* ══════════════════════════════════════════════
             HERO
         ══════════════════════════════════════════════ */}
-                <section className="relative overflow-hidden bg-slate-950">
+                <section className="relative overflow-hidden bg-bg">
                     <div aria-hidden className="absolute inset-0 pointer-events-none">
                         <div className="absolute top-[-15%] left-[-10%] w-[600px] h-[600px]
-              rounded-full bg-cyan-500/8 blur-[120px]" />
+              rounded-full bg-accent-cyan/[0.06] blur-[120px]" />
                         <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px]
-              rounded-full bg-violet-600/8 blur-[120px]" />
+              rounded-full bg-accent-violet/[0.06] blur-[120px]" />
                         <div
-                            className="absolute inset-0 opacity-[0.025]"
+                            className="absolute inset-0 opacity-[0.02]"
                             style={{
                                 backgroundImage:
-                                    "linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)",
+                                    "linear-gradient(rgba(0,0,0,.4) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.4) 1px,transparent 1px)",
                                 backgroundSize: "40px 40px",
                             }}
                         />
@@ -220,16 +220,16 @@ export default function AboutPage() {
                         {/* Breadcrumb */}
                         <motion.nav
                             aria-label="Breadcrumb"
-                            className="flex items-center gap-1.5 text-xs text-slate-500 mb-8"
+                            className="flex items-center gap-1.5 text-xs text-text-faint mb-8"
                             initial={{ opacity: 0, y: -8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4 }}
                         >
-                            <Link href="/" className="hover:text-slate-300 transition-colors">
+                            <Link href="/" className="hover:text-text transition-colors">
                                 Home
                             </Link>
                             <ChevronRight size={12} />
-                            <span className="text-slate-400">About Us</span>
+                            <span className="text-text-muted">About Us</span>
                         </motion.nav>
 
                         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -244,7 +244,7 @@ export default function AboutPage() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.4, delay: 0.05 }}
                                     className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                    bg-cyan-500/10 border border-cyan-500/20 text-cyan-400
+                    bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan
                     text-xs font-semibold tracking-widest uppercase mb-6"
                                 >
                                     <MapPin size={11} />
@@ -252,12 +252,12 @@ export default function AboutPage() {
                                 </motion.div>
 
                                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black
-                  tracking-tighter leading-[1.05] text-slate-50 mb-5">
+                  tracking-tighter leading-[1.05] text-text mb-5">
                                     Ekiti&apos;s most trusted{" "}
                                     <span className="text-gradient-cyan">gadget store</span>
                                 </h1>
 
-                                <p className="text-slate-400 text-lg leading-relaxed mb-6">
+                                <p className="text-text-muted text-lg leading-relaxed mb-6">
                                     HolarzGadgets was founded with one mission — to make premium,
                                     original technology accessible to everyone in Ekiti State and
                                     across Nigeria. No fakes. No overpricing. Just great gadgets,
@@ -269,9 +269,8 @@ export default function AboutPage() {
                                         <Link
                                             href="/products"
                                             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                        bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm
-                        shadow-[0_0_20px_rgba(6,182,212,0.35)]
-                        transition-all duration-200"
+                        bg-primary-500 hover:bg-primary-400 text-text-onprimary font-bold text-sm
+                        shadow-glow-primary transition-all duration-200"
                                         >
                                             Shop Now
                                         </Link>
@@ -282,8 +281,8 @@ export default function AboutPage() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                        bg-slate-800 hover:bg-slate-700 border border-slate-700
-                        text-slate-200 font-bold text-sm transition-colors"
+                        bg-bg-muted hover:bg-bg-subtle border border-border
+                        text-text font-bold text-sm transition-colors"
                                         >
                                             <MessageCircle size={15} />
                                             WhatsApp Us
@@ -304,12 +303,12 @@ export default function AboutPage() {
                                         key={label}
                                         variants={cardAnim}
                                         whileHover={{ y: -4, scale: 1.02 }}
-                                        className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800
-                      hover:border-slate-600 transition-colors text-center"
+                                        className="p-5 rounded-2xl bg-card border border-card-border
+                      hover:border-border-strong transition-colors text-center"
                                     >
-                                        <Icon size={20} className="text-cyan-400 mx-auto mb-2" />
+                                        <Icon size={20} className="text-accent-cyan mx-auto mb-2" />
                                         <p className="text-2xl font-black text-gradient-cyan">{value}</p>
-                                        <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+                                        <p className="text-xs text-text-faint mt-0.5">{label}</p>
                                     </motion.div>
                                 ))}
                             </motion.div>
@@ -320,7 +319,7 @@ export default function AboutPage() {
                 {/* ══════════════════════════════════════════════
             OUR STORY
         ══════════════════════════════════════════════ */}
-                <section className="section-padding bg-slate-900/30 border-y border-slate-800/60">
+                <section className="section-padding bg-bg-subtle border-y border-border">
                     <div className="container-app">
                         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
@@ -332,18 +331,18 @@ export default function AboutPage() {
                                 viewport={{ once: true, margin: "-60px" }}
                             >
                                 <p className="text-xs font-bold tracking-widest uppercase
-                  text-cyan-400/80 mb-3">
+                  text-accent-cyan/80 mb-3">
                                     Our Story
                                 </p>
                                 <h2 className="text-3xl md:text-4xl font-black tracking-tight
-                  text-slate-50 mb-5">
+                  text-text mb-5">
                                     Born in Ekiti,{" "}
                                     <span className="text-gradient-volt">built for Nigeria</span>
                                 </h2>
-                                <div className="space-y-4 text-slate-400 text-sm leading-relaxed">
+                                <div className="space-y-4 text-text-muted text-sm leading-relaxed">
                                     <p>
                                         HolarzGadgets was started by{" "}
-                                        <strong className="text-slate-200">Oyewole Sheriffdeen</strong> in
+                                        <strong className="text-text">Oyewole Sheriffdeen</strong> in
                                         Ado-Ekiti with a simple observation: getting a genuine, fairly-priced
                                         gadget in Ekiti State was unnecessarily hard. People either paid
                                         inflated prices at local shops or risked buying fake products online.
@@ -356,7 +355,7 @@ export default function AboutPage() {
                                     </p>
                                     <p>
                                         Today, HolarzGadgets serves customers across{" "}
-                                        <strong className="text-slate-200">
+                                        <strong className="text-text">
                                             Ado-Ekiti, Ikere-Ekiti, Ikole-Ekiti, Ilawe-Ekiti
                                         </strong>{" "}
                                         and all 36 states in Nigeria. Every order is personally confirmed via
@@ -374,7 +373,7 @@ export default function AboutPage() {
                                 className="space-y-3"
                             >
                                 <p className="text-xs font-bold tracking-widest uppercase
-                  text-slate-500 mb-4">
+                  text-text-faint mb-4">
                                     Brands we carry
                                 </p>
                                 <div className="flex flex-wrap gap-2">
@@ -385,9 +384,9 @@ export default function AboutPage() {
                                             whileInView={{ opacity: 1, scale: 1 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: i * 0.04, duration: 0.3 }}
-                                            className="px-3 py-1.5 rounded-lg bg-slate-800/70 border
-                        border-slate-700/60 text-sm font-semibold text-slate-300
-                        hover:text-cyan-400 hover:border-cyan-500/40 transition-colors"
+                                            className="px-3 py-1.5 rounded-lg bg-bg-muted border
+                        border-border text-sm font-semibold text-text-muted
+                        hover:text-accent-cyan hover:border-accent-cyan/40 transition-colors"
                                         >
                                             {brand}
                                         </motion.span>
@@ -401,17 +400,17 @@ export default function AboutPage() {
                                             key={slug}
                                             href={`/products?category=${slug}`}
                                             className="group flex flex-col items-center gap-2 p-3 rounded-xl
-                        bg-slate-900/60 border border-slate-800
-                        hover:border-cyan-500/30 hover:bg-slate-800/60
+                        bg-card border border-card-border
+                        hover:border-accent-cyan/30 hover:bg-card-hover
                         transition-all duration-200 text-center"
                                         >
                                             <Icon
                                                 size={18}
-                                                className="text-slate-500 group-hover:text-cyan-400
+                                                className="text-text-faint group-hover:text-accent-cyan
                           transition-colors"
                                             />
-                                            <span className="text-[11px] text-slate-400
-                        group-hover:text-slate-200 transition-colors font-medium">
+                                            <span className="text-[11px] text-text-muted
+                        group-hover:text-text transition-colors font-medium">
                                                 {label}
                                             </span>
                                         </Link>
@@ -425,7 +424,7 @@ export default function AboutPage() {
                 {/* ══════════════════════════════════════════════
             VALUES
         ══════════════════════════════════════════════ */}
-                <section className="section-padding bg-slate-950">
+                <section className="section-padding bg-bg">
                     <div className="container-app">
                         <motion.div
                             className="text-center max-w-xl mx-auto mb-12"
@@ -435,11 +434,11 @@ export default function AboutPage() {
                             viewport={{ once: true, margin: "-60px" }}
                         >
                             <p className="text-xs font-bold tracking-widest uppercase
-                text-violet-400/80 mb-3">
+                text-accent-violet/80 mb-3">
                                 What We Stand For
                             </p>
                             <h2 className="text-3xl md:text-4xl font-black tracking-tight
-                text-slate-50">
+                text-text">
                                 Why customers choose{" "}
                                 <span className="text-gradient-volt">HolarzGadgets</span>
                             </h2>
@@ -457,15 +456,15 @@ export default function AboutPage() {
                                     key={title}
                                     variants={cardAnim}
                                     whileHover={{ y: -5 }}
-                                    className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800
-                    hover:border-slate-600 transition-all duration-300"
+                                    className="p-6 rounded-2xl bg-card border border-card-border
+                    hover:border-border-strong transition-all duration-300"
                                 >
                                     <div className={`w-11 h-11 rounded-xl ${bg} flex items-center
                     justify-center mb-4`}>
                                         <Icon size={20} className={color} />
                                     </div>
-                                    <h3 className="font-bold text-slate-100 mb-2">{title}</h3>
-                                    <p className="text-sm text-slate-500 leading-relaxed">{desc}</p>
+                                    <h3 className="font-bold text-text mb-2">{title}</h3>
+                                    <p className="text-sm text-text-faint leading-relaxed">{desc}</p>
                                 </motion.div>
                             ))}
                         </motion.div>
@@ -475,7 +474,7 @@ export default function AboutPage() {
                 {/* ══════════════════════════════════════════════
             TESTIMONIALS
         ══════════════════════════════════════════════ */}
-                <section className="section-padding bg-slate-900/30 border-t border-slate-800/60">
+                <section className="section-padding bg-bg-subtle border-t border-border">
                     <div className="container-app">
                         <motion.div
                             className="text-center max-w-xl mx-auto mb-12"
@@ -485,14 +484,14 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                         >
                             <p className="text-xs font-bold tracking-widest uppercase
-                text-amber-400/80 mb-3">
+                text-accent-amber/80 mb-3">
                                 Customer Reviews
                             </p>
-                            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-50">
+                            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-text">
                                 What our customers{" "}
-                                <span className="text-amber-400">say</span>
+                                <span className="text-accent-amber">say</span>
                             </h2>
-                            <p className="text-slate-500 text-sm mt-3">
+                            <p className="text-text-faint text-sm mt-3">
                                 Real customers from across Ekiti State and Nigeria
                             </p>
                         </motion.div>
@@ -509,8 +508,8 @@ export default function AboutPage() {
                                     key={name}
                                     variants={cardAnim}
                                     whileHover={{ y: -4 }}
-                                    className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800
-                    hover:border-amber-500/20 transition-all duration-300 flex flex-col gap-4"
+                                    className="p-6 rounded-2xl bg-card border border-card-border
+                    hover:border-accent-amber/20 transition-all duration-300 flex flex-col gap-4"
                                 >
                                     {/* Stars */}
                                     <div className="flex gap-0.5">
@@ -524,20 +523,20 @@ export default function AboutPage() {
                                     </div>
 
                                     {/* Quote */}
-                                    <p className="text-slate-300 text-sm leading-relaxed flex-1">
+                                    <p className="text-text-muted text-sm leading-relaxed flex-1">
                                         &ldquo;{text}&rdquo;
                                     </p>
 
                                     {/* Author */}
                                     <div className="flex items-center gap-3">
                                         <div className="w-9 h-9 rounded-full bg-gradient-to-br
-                      from-cyan-500 to-violet-600 flex items-center justify-center
-                      text-white text-xs font-black flex-shrink-0">
+                      from-accent-cyan to-accent-violet flex items-center justify-center
+                      text-text-inverse text-xs font-black flex-shrink-0">
                                             {name.charAt(0)}
                                         </div>
                                         <div>
-                                            <p className="text-sm font-semibold text-slate-200">{name}</p>
-                                            <p className="text-[11px] text-slate-500 flex items-center gap-1">
+                                            <p className="text-sm font-semibold text-text">{name}</p>
+                                            <p className="text-[11px] text-text-faint flex items-center gap-1">
                                                 <MapPin size={9} /> {location}
                                             </p>
                                         </div>
@@ -551,7 +550,7 @@ export default function AboutPage() {
                 {/* ══════════════════════════════════════════════
             SERVICE AREAS  (SEO section)
         ══════════════════════════════════════════════ */}
-                <section className="section-padding bg-slate-950">
+                <section className="section-padding bg-bg">
                     <div className="container-app">
                         <motion.div
                             variants={fadeUp}
@@ -561,14 +560,14 @@ export default function AboutPage() {
                             className="max-w-3xl mx-auto text-center"
                         >
                             <p className="text-xs font-bold tracking-widest uppercase
-                text-cyan-400/80 mb-3">
+                text-accent-cyan/80 mb-3">
                                 Delivery Coverage
                             </p>
-                            <h2 className="text-3xl font-black tracking-tight text-slate-50 mb-4">
+                            <h2 className="text-3xl font-black tracking-tight text-text mb-4">
                                 We deliver everywhere in{" "}
                                 <span className="text-gradient-cyan">Ekiti & Nigeria</span>
                             </h2>
-                            <p className="text-slate-400 text-sm leading-relaxed mb-8">
+                            <p className="text-text-muted text-sm leading-relaxed mb-8">
                                 HolarzGadgets delivers original gadgets to every town in Ekiti State
                                 including Ado-Ekiti, Ikere-Ekiti, Ikole-Ekiti, Ilawe-Ekiti,
                                 Aramoko-Ekiti, Oye-Ekiti, Ido-Ekiti, Emure-Ekiti, and all 36 states
@@ -588,8 +587,8 @@ export default function AboutPage() {
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: i * 0.03 }}
-                                        className="px-3 py-1.5 rounded-full bg-slate-800/60
-                      border border-slate-700/60 text-xs text-slate-400
+                                        className="px-3 py-1.5 rounded-full bg-bg-muted
+                      border border-border text-xs text-text-muted
                       font-medium"
                                     >
                                         {city}
@@ -603,7 +602,7 @@ export default function AboutPage() {
                 {/* ══════════════════════════════════════════════
             CTA
         ══════════════════════════════════════════════ */}
-                <section className="section-padding bg-slate-950">
+                <section className="section-padding bg-bg">
                     <div className="container-app">
                         <motion.div
                             initial={{ opacity: 0, y: 24 }}
@@ -611,14 +610,14 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.55 }}
                             className="relative overflow-hidden rounded-3xl
-                bg-gradient-to-br from-cyan-900/40 via-slate-900 to-violet-900/40
-                border border-cyan-500/20 p-8 md:p-14 text-center"
+                bg-gradient-to-br from-accent-cyan/10 via-bg-subtle to-accent-violet/10
+                border border-accent-cyan/20 p-8 md:p-14 text-center"
                         >
                             <div aria-hidden className="absolute inset-0 pointer-events-none">
                                 <div className="absolute top-0 right-0 w-72 h-72 rounded-full
-                  bg-cyan-500/10 blur-3xl" />
+                  bg-accent-cyan/10 blur-3xl" />
                                 <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full
-                  bg-violet-600/10 blur-3xl" />
+                  bg-accent-violet/10 blur-3xl" />
                             </div>
 
                             <motion.div
@@ -629,16 +628,16 @@ export default function AboutPage() {
                                 transition={{ duration: 0.5, delay: 0.1 }}
                             >
                                 <div className="inline-flex items-center justify-center w-16 h-16
-                  rounded-2xl bg-gradient-to-br from-cyan-500 to-violet-600 mb-6
-                  shadow-[0_0_30px_rgba(6,182,212,0.4)]">
-                                    <Zap size={28} className="text-white" />
+                  rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 mb-6
+                  shadow-glow-primary">
+                                    <Zap size={28} className="text-text-inverse" />
                                 </div>
 
                                 <h2 className="text-3xl md:text-4xl font-black tracking-tight
-                  text-slate-50 mb-4">
+                  text-text mb-4">
                                     Ready to upgrade your tech?
                                 </h2>
-                                <p className="text-slate-400 mb-8 max-w-md mx-auto">
+                                <p className="text-text-muted mb-8 max-w-md mx-auto">
                                     Browse our full range of original gadgets — trusted by over 1,200
                                     customers across Ekiti State and Nigeria.
                                 </p>
@@ -648,9 +647,8 @@ export default function AboutPage() {
                                         <Link
                                             href="/products"
                                             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl
-                        bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm
-                        shadow-[0_0_25px_rgba(6,182,212,0.4)]
-                        hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]
+                        bg-primary-500 hover:bg-primary-400 text-text-onprimary font-bold text-sm
+                        shadow-glow-primary hover:shadow-[0_0_40px_rgb(var(--color-primary-500)/60%)]
                         transition-all duration-200"
                                         >
                                             Browse Products
@@ -662,8 +660,8 @@ export default function AboutPage() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl
-                        bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm
-                        shadow-[0_0_25px_rgba(16,185,129,0.35)]
+                        bg-success hover:opacity-90 text-text-inverse font-bold text-sm
+                        shadow-[0_0_25px_rgb(var(--color-success)/35%)]
                         transition-all duration-200"
                                         >
                                             <MessageCircle size={16} />

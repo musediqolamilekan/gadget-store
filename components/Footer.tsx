@@ -1,7 +1,8 @@
 "use client";
 
 import Link        from "next/link";
-import { Zap, MapPin } from "lucide-react";
+import Image       from "next/image";
+import { MapPin } from "lucide-react";
 import { motion }  from "framer-motion";
 import type { SanityCategory } from "@/sanity/lib/fetch";
 
@@ -163,25 +164,22 @@ export default function Footer({ categories }: FooterProps) {
             variants={columnVariants}
           >
             {/* Logo */}
-            <Link href="/" className="inline-flex items-center gap-2.5 group mb-5">
+            <Link href="/" className="inline-flex group mb-5">
               <motion.div
-                className="w-9 h-9 rounded-xl bg-gradient-to-br
-                  from-primary-500 to-primary-700
-                  flex items-center justify-center glow-primary"
-                whileHover={{ scale: 1.1 }}
+                className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0
+                  ring-1 ring-white/10 group-hover:ring-primary-400/40
+                  transition-all duration-200"
+                whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Zap size={17} className="text-white" />
+                <Image
+                  src="/images/white-logo.jpeg"
+                  alt="HolarzGadgets"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
-              <div className="flex flex-col leading-tight">
-                <span className="text-base font-black tracking-tight text-white">
-                  Holarz<span className="text-primary-400">Gadgets</span>
-                </span>
-                <span className="text-[9px] font-semibold tracking-widest
-                  uppercase text-slate-500 leading-none">
-                  Ekiti&apos;s #1 Tech Store
-                </span>
-              </div>
             </Link>
 
             {/* Description */}

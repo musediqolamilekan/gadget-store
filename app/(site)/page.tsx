@@ -293,12 +293,9 @@ export default async function HomePage() {
           </div>
 
           <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {bestsellers.map((product, i) => (
+            {bestsellers.map((product) => (
               <StaggerItem key={product.id}>
-                <ProductCard
-                  product={product}
-                  variant={i < 2 ? "default" : "compact"}
-                />
+                <ProductCard product={product} />
               </StaggerItem>
             ))}
           </StaggerGrid>

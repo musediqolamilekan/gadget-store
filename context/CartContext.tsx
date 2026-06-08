@@ -6,6 +6,7 @@ import React, {
   useReducer,
   useCallback,
   useMemo,
+  useEffect,
 } from "react";
 import { CartItem, Product } from "@/types";
 
@@ -27,7 +28,8 @@ type CartAction =
   | { type: "CLEAR_CART" }
   | { type: "OPEN_CART" }
   | { type: "CLOSE_CART" }
-  | { type: "TOGGLE_CART" };
+  | { type: "TOGGLE_CART" }
+  | { type: "HYDRATE"; payload: CartItem[] };
 
 // ─────────────────────────────────────────────────────────────
 // REDUCER
@@ -84,6 +86,9 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     case "CLEAR_CART":
       return { ...state, items: [] };
 
+    case "HYDRATE":
+      return { ...state, items: action.payload };
+
     case "OPEN_CART":
       return { ...state, isOpen: true };
 
@@ -120,11 +125,29 @@ const CartContext = createContext<CartContextValue | null>(null);
 // ─────────────────────────────────────────────────────────────
 // PROVIDER
 // ─────────────────────────────────────────────────────────────
+const CART_KEY = "holarz_cart";
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, {
-    items: [],
-    isOpen: false,
-  });
+  // Start empty — matches the server render, avoiding hydration mismatch
+  const [state, dispatch] = useReducer(cartReducer, { items: [], isOpen: false });
+
+  // After mount: restore cart from localStorage
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(CART_KEY);
+      if (raw) {
+        const items = JSON.parse(raw) as CartItem[];
+        if (items.length > 0) dispatch({ type: "HYDRATE", payload: items });
+      }
+    } catch {}
+  }, []);
+
+  // Persist items to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(state.items));
+    } catch {}
+  }, [state.items]);
 
   const addItem = useCallback(
     (product: Product) => dispatch({ type: "ADD_ITEM", payload: product }),

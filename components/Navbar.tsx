@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import {
-  Zap, Search, ShoppingCart, Menu, X,
+  Search, ShoppingCart, Menu, X,
   Smartphone, Laptop, Watch, BatteryCharging,
   Headphones, Cable, Package, Wifi,
   BookOpen, ChevronDown, type LucideIcon,
@@ -84,30 +85,26 @@ export default function Navbar({ categories }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-30 w-full">
-      <PromoBanner />
+      {/* <PromoBanner /> */}
 
       {/* ── Main nav ─────────────────────────────────────── */}
       <nav className="bg-bg border-b border-border shadow-nav">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16 gap-4">
+          <div className="flex items-center h-20 gap-4">
 
             {/* ── Logo ────────────────────────────────────── */}
-            <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br
-                from-primary-500 to-primary-600
-                flex items-center justify-center glow-primary
-                group-hover:shadow-[0_0_25px_rgb(var(--color-primary-500)/50%)]
-                transition-shadow duration-200">
-                <Zap size={17} className="text-text-inverse" />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className="text-base font-black tracking-tight text-text">
-                  Holarz<span className="text-primary-500">Gadgets</span>
-                </span>
-                <span className="text-[9px] font-semibold tracking-widest uppercase
-                  text-text-faint leading-none">
-                  Ekiti&apos;s #1 Tech Store
-                </span>
+            <Link href="/" className="flex items-center flex-shrink-0 group">
+              <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0
+                ring-1 ring-border group-hover:ring-primary-400
+                transition-all duration-200">
+                <Image
+                  src="/images/logo.jpeg"
+                  alt="HolarzGadgets"
+                  width={56}
+                  height={56}
+                  className="w-full h-full object-cover"
+                  priority
+                />
               </div>
             </Link>
 

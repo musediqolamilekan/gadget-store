@@ -6,6 +6,7 @@ import CartDrawer        from "@/components/CartDrawer";
 import { Analytics }     from "@vercel/analytics/next";
 import NavbarServer      from "@/components/NavbarServer";
 import FooterServer      from "@/components/FooterServer";
+import WhatsAppFloat     from "@/components/WhatsAppFloat";
 
 // ── Fonts ────────────────────────────────────────────────────
 const inter = Inter({
@@ -160,8 +161,9 @@ export default function RootLayout({
         <CartProvider>
           <NavbarServer />
           <CartDrawer />
-          <main className="min-h-[calc(100vh-64px)]">{children}</main>
+          <main className="min-h-[calc(100vh-80px)]">{children}</main>
           <FooterServer />
+          <WhatsAppFloat />
         </CartProvider>
 
         {/* Vercel Analytics */}

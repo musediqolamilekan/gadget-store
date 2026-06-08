@@ -1,6 +1,6 @@
 "use client";
 
-import { useState }    from "react";
+import { useState, useEffect } from "react";
 import Link            from "next/link";
 import Image           from "next/image";
 import {
@@ -9,14 +9,12 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart }     from "@/context/CartContext";
+import type { CartItem } from "@/types";
 
 // ─────────────────────────────────────────────────────────────
 // CONSTANTS
 // ─────────────────────────────────────────────────────────────
-const WHATSAPP_NUMBER        = "2349055427487";
-const FREE_SHIPPING_THRESHOLD = 50_000;
-const SHIPPING_COST           = 3_500;
-const TAX_RATE                = 0.075;
+const WHATSAPP_NUMBER = "2349055427487";
 
 // ─────────────────────────────────────────────────────────────
 // TYPES
@@ -97,13 +95,25 @@ function Field({
 // PAGE
 // ─────────────────────────────────────────────────────────────
 export default function CheckoutPage() {
-  const { items, subtotal, clearCart } = useCart();
+  const { items, clearCart } = useCart();
+  const [buyNowItem, setBuyNowItem] = useState<CartItem | null>(null);
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM);
   const [step, setStep] = useState<"form" | "processing" | "success">("form");
 
-  const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-  const tax          = subtotal * TAX_RATE;
-  const total        = subtotal + shippingCost + tax;
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("holarz_buy_now");
+      if (raw) setBuyNowItem(JSON.parse(raw) as CartItem);
+    } catch {}
+  }, []);
+
+  const activeItems = buyNowItem ? [buyNowItem] : items;
+  const activeSubtotal = activeItems.reduce(
+    (acc, { product, quantity }) =>
+      acc + (product.discountPrice ?? product.price) * quantity,
+    0
+  );
+  const total = activeSubtotal;
 
   const fmtNaira = (n: number) =>
     new Intl.NumberFormat("en-NG", {
@@ -119,7 +129,7 @@ export default function CheckoutPage() {
     setStep("processing");
     await new Promise((r) => setTimeout(r, 1800));
 
-    const orderLines = items
+    const orderLines = activeItems
       .map(({ product, quantity }) => {
         const price = product.discountPrice ?? product.price;
         return `  • ${product.name} × ${quantity} — ${fmtNaira(price * quantity)}`;
@@ -139,21 +149,24 @@ Address: ${formData.address}, ${formData.city}, ${formData.state}, ${formData.co
 ${orderLines}
 
 *Order Summary*
-Subtotal:   ${fmtNaira(subtotal)}
-Shipping:   ${shippingCost === 0 ? "FREE" : fmtNaira(shippingCost)}
-Tax (7.5%): ${fmtNaira(tax)}
-*Total:     ${fmtNaira(total)}*
+Subtotal: ${fmtNaira(activeSubtotal)}
+*Total:   ${fmtNaira(total)}*
+_(Delivery fee will be confirmed before dispatch)_
 
 Please confirm this order and provide payment instructions. Thank you!
     `.trim();
 
-    clearCart();
+    if (buyNowItem) {
+      try { sessionStorage.removeItem("holarz_buy_now"); } catch {}
+    } else {
+      clearCart();
+    }
     setStep("success");
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   // ── Empty cart ──────────────────────────────────────────
-  if (items.length === 0 && step !== "success") {
+  if (activeItems.length === 0 && step !== "success") {
     return (
       <motion.div
         variants={pageVariants}
@@ -296,7 +309,7 @@ Please confirm this order and provide payment instructions. Thank you!
           <div>
             <h1 className="text-2xl font-black tracking-tight text-text">Checkout</h1>
             <p className="text-text-faint text-sm">
-              {items.length} {items.length === 1 ? "item" : "items"}
+              {activeItems.length} {activeItems.length === 1 ? "item" : "items"}
             </p>
           </div>
           <div className="ml-auto flex items-center gap-1.5 text-xs text-text-faint">
@@ -372,7 +385,7 @@ Please confirm this order and provide payment instructions. Thank you!
 
                 {/* Items */}
                 <div className="space-y-3 mb-5 max-h-72 overflow-y-auto pr-1">
-                  {items.map(({ product, quantity }, i) => {
+                  {activeItems.map(({ product, quantity }, i) => {
                     const price  = product.discountPrice ?? product.price;
                     const img    = product.images.find((x) => x.isPrimary) ?? product.images[0];
                     const imgUrl =
@@ -433,29 +446,18 @@ Please confirm this order and provide payment instructions. Thank you!
                 <div className="border-t border-border pt-4 space-y-2.5">
                   <div className="flex justify-between text-sm text-text-muted">
                     <span>Subtotal</span>
-                    <span>{fmtNaira(subtotal)}</span>
-                  </div>
-                  <div className="flex justify-between text-sm text-text-muted">
-                    <span>Shipping</span>
-                    <span className={shippingCost === 0
-                      ? "text-success font-medium" : ""}>
-                      {shippingCost === 0 ? "FREE" : fmtNaira(shippingCost)}
-                    </span>
-                  </div>
-                  {shippingCost > 0 && (
-                    <p className="text-[10px] text-text-faint">
-                      Free delivery on orders over {fmtNaira(FREE_SHIPPING_THRESHOLD)}
-                    </p>
-                  )}
-                  <div className="flex justify-between text-sm text-text-muted">
-                    <span>Tax (7.5%)</span>
-                    <span>{fmtNaira(tax)}</span>
+                    <span>{fmtNaira(activeSubtotal)}</span>
                   </div>
                   <div className="flex justify-between text-base font-bold
                     text-text pt-2 border-t border-border">
                     <span>Total</span>
                     <span className="text-gradient-primary">{fmtNaira(total)}</span>
                   </div>
+                  <p className="text-[11px] text-text-faint leading-relaxed pt-1">
+                    <Truck size={10} className="inline mr-1 text-primary-500" />
+                    You&apos;ll be contacted with the delivery fee for your location
+                    before your order is dispatched.
+                  </p>
                 </div>
 
                 {/* Submit */}

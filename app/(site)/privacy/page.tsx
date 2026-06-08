@@ -196,33 +196,33 @@ export default function PrivacyPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
-            <div className="min-h-screen bg-slate-950">
+            <div className="min-h-screen bg-bg">
                 {/* ── Hero ──────────────────────────────────────── */}
-                <section className="relative overflow-hidden bg-slate-900/50 border-b border-slate-800/60">
+                <section className="relative overflow-hidden bg-bg-subtle border-b border-border">
                     <div className="absolute inset-0 pointer-events-none">
-                        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-violet-500/5 blur-3xl" />
+                        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-accent-violet/5 blur-3xl" />
                     </div>
                     <div className="container-app py-14 relative">
                         {/* Breadcrumb */}
                         <nav
                             aria-label="Breadcrumb"
-                            className="flex items-center gap-1.5 text-xs text-slate-500 mb-6"
+                            className="flex items-center gap-1.5 text-xs text-text-faint mb-6"
                         >
-                            <Link href="/" className="hover:text-slate-300 transition-colors">Home</Link>
+                            <Link href="/" className="hover:text-text transition-colors">Home</Link>
                             <ChevronRight size={12} />
-                            <span className="text-slate-400">Privacy Policy</span>
+                            <span className="text-text-muted">Privacy Policy</span>
                         </nav>
 
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center">
-                                <Shield size={18} className="text-violet-400" />
+                            <div className="w-10 h-10 rounded-xl bg-accent-violet/10 flex items-center justify-center">
+                                <Shield size={18} className="text-accent-violet" />
                             </div>
-                            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-slate-50">
+                            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-text">
                                 Privacy Policy
                             </h1>
                         </div>
-                        <p className="text-slate-400 text-sm max-w-xl">
-                            Last updated: <strong className="text-slate-300">1 January 2025</strong>.
+                        <p className="text-text-muted text-sm max-w-xl">
+                            Last updated: <strong className="text-text">1 January 2025</strong>.
                             HolarzGadgets is committed to protecting the privacy of our customers
                             across Ekiti State and all of Nigeria.
                         </p>
@@ -237,16 +237,16 @@ export default function PrivacyPage() {
                         <aside className="hidden lg:block">
                             <div className="sticky top-24 space-y-1">
                                 <p className="text-[10px] font-bold tracking-widest uppercase
-                  text-slate-500 mb-3">
+                  text-text-faint mb-3">
                                     Contents
                                 </p>
                                 {SECTIONS.map((s) => (
                                     <a
                                         key={s.id}
                                         href={`#${s.id}`}
-                                        className="block text-xs text-slate-500 hover:text-violet-400
-                      transition-colors py-1 border-l-2 border-slate-800
-                      hover:border-violet-500 pl-3"
+                                        className="block text-xs text-text-faint hover:text-accent-violet
+                      transition-colors py-1 border-l-2 border-border
+                      hover:border-accent-violet pl-3"
                                     >
                                         {s.title}
                                     </a>
@@ -257,30 +257,30 @@ export default function PrivacyPage() {
                         {/* Content */}
                         <article className="max-w-none">
                             {/* SEO-rich intro */}
-                            <div className="text-slate-400 text-sm leading-relaxed mb-10
-                p-4 rounded-xl bg-slate-900/50 border border-slate-800">
-                                <strong className="text-slate-200">HolarzGadgets</strong> is Ekiti
+                            <div className="text-text-muted text-sm leading-relaxed mb-10
+                p-4 rounded-xl bg-bg-subtle border border-border">
+                                <strong className="text-text">HolarzGadgets</strong> is Ekiti
                                 State&apos;s leading online store for original and affordable gadgets. We sell
                                 iPhones, Samsung Galaxy phones, MacBooks, laptops, Apple Watch, Samsung
                                 Galaxy Watch, AirPods, Sony earbuds, Anker power banks, and all kinds of
                                 tech accessories. We are based in{" "}
-                                <strong className="text-slate-200">Ado-Ekiti, Ekiti State</strong> and
+                                <strong className="text-text">Ado-Ekiti, Ekiti State</strong> and
                                 deliver to Ikere-Ekiti, Ikole-Ekiti, Ilawe-Ekiti, and nationwide across
                                 Nigeria.
                             </div>
 
                             {SECTIONS.map((s) => (
                                 <section key={s.id} id={s.id} className="mb-10 scroll-mt-24">
-                                    <h2 className="text-lg font-bold text-slate-100 mb-3">
+                                    <h2 className="text-lg font-bold text-text mb-3">
                                         {s.title}
                                     </h2>
-                                    <p className="text-slate-400 leading-relaxed text-sm">{s.body}</p>
+                                    <p className="text-text-muted leading-relaxed text-sm">{s.body}</p>
                                 </section>
                             ))}
 
                             {/* FAQ Section — targets featured snippet */}
                             <section className="mt-14" id="faq">
-                                <h2 className="text-2xl font-black text-slate-50 mb-8">
+                                <h2 className="text-2xl font-black text-text mb-8">
                                     Frequently Asked Questions
                                 </h2>
                                 <div className="space-y-4">
@@ -308,21 +308,21 @@ export default function PrivacyPage() {
                                     ].map(({ q, a }) => (
                                         <details
                                             key={q}
-                                            className="group rounded-xl bg-slate-900/50 border border-slate-800
+                                            className="group rounded-xl bg-bg-subtle border border-border
                         overflow-hidden"
                                         >
                                             <summary className="flex items-center justify-between px-5 py-4
-                        cursor-pointer text-sm font-semibold text-slate-200
-                        hover:text-cyan-400 transition-colors list-none">
+                        cursor-pointer text-sm font-semibold text-text
+                        hover:text-accent-cyan transition-colors list-none">
                                                 {q}
                                                 <ChevronRight
                                                     size={14}
-                                                    className="text-slate-500 group-open:rotate-90
+                                                    className="text-text-faint group-open:rotate-90
                             transition-transform duration-200 flex-shrink-0 ml-3"
                                                 />
                                             </summary>
                                             <div className="px-5 pb-4">
-                                                <p className="text-slate-400 text-sm leading-relaxed">{a}</p>
+                                                <p className="text-text-muted text-sm leading-relaxed">{a}</p>
                                             </div>
                                         </details>
                                     ))}
@@ -330,12 +330,12 @@ export default function PrivacyPage() {
                             </section>
 
                             {/* CTA */}
-                            <div className="mt-14 p-6 rounded-2xl bg-slate-900/60 border
-                border-slate-800 text-center">
-                                <p className="text-slate-300 font-semibold mb-2">
+                            <div className="mt-14 p-6 rounded-2xl bg-bg-subtle border
+                border-border text-center">
+                                <p className="text-text font-semibold mb-2">
                                     Shop the best gadgets in Ekiti State
                                 </p>
-                                <p className="text-slate-500 text-sm mb-5">
+                                <p className="text-text-faint text-sm mb-5">
                                     Original phones, laptops, smartwatches, and accessories — delivered
                                     to your door anywhere in Ekiti and Nigeria.
                                 </p>
@@ -343,7 +343,7 @@ export default function PrivacyPage() {
                                     <Link
                                         href="/products"
                                         className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                      bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm
+                      bg-primary-500 hover:bg-primary-400 text-text-onprimary font-bold text-sm
                       transition-colors"
                                     >
                                         Browse Products
@@ -353,7 +353,7 @@ export default function PrivacyPage() {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                      bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm
+                      bg-success hover:opacity-90 text-text-inverse font-bold text-sm
                       transition-colors"
                                     >
                                         Chat on WhatsApp

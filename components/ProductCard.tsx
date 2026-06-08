@@ -15,7 +15,7 @@ export default function ProductCard({
   product,
   variant = "default",
 }: ProductCardProps) {
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
   const isCompact   = variant === "compact";
 
   const effectivePrice = product.discountPrice ?? product.price;
@@ -175,20 +175,11 @@ export default function ProductCard({
             </p>
           </div>
 
-          {/* View Details button */}
-          <Link
-            href={`/products/${product.slug}`}
-            className="flex-shrink-0 flex items-center gap-1.5
-              px-3 py-2 rounded-xl btn-primary text-xs active:scale-95"
-          >
-            {isCompact ? "View" : "View Details"}
-          </Link>
-
-          {/* ── Add to Cart — restore when payment gateway is added ── */}
-          {/* <button
+          <button
             onClick={(e) => {
               e.preventDefault();
               addItem(product);
+              openCart();
             }}
             disabled={product.stockCount === 0}
             aria-label={`Add ${product.name} to cart`}
@@ -197,9 +188,8 @@ export default function ProductCard({
               disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShoppingCart size={14} />
-            {!isCompact && <span>Add</span>}
-          </button> */}
-          {/* ── */}
+            <span>Add</span>
+          </button>
         </div>
       </div>
     </article>

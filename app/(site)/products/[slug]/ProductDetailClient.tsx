@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Star, Shield, Truck, RotateCcw, Minus, Plus,
+  ShoppingCart, Zap, Star, Shield, Truck, RotateCcw, Minus, Plus,
 } from "lucide-react";
 import type { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
@@ -65,14 +66,6 @@ const thumbnailVariants = {
   }),
 };
 
-// WhatsApp SVG — shared between CTAs
-const WaIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 flex-shrink-0">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.109.549 4.09 1.508 5.814L.057 23.25l5.575-1.462A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 01-5.031-1.371l-.361-.214-3.31.869.882-3.23-.235-.373A9.872 9.872 0 012.1 12c0-5.457 4.444-9.9 9.9-9.9 5.457 0 9.9 4.443 9.9 9.9 0 5.458-4.443 9.9-9.9 9.9z" />
-  </svg>
-);
-
 // ─────────────────────────────────────────────────────────────
 // COMPONENT
 // ─────────────────────────────────────────────────────────────
@@ -84,7 +77,8 @@ interface Props {
 export default function ProductDetailClient({
   product, portableDescription,
 }: Props) {
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
+  const router = useRouter();
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
@@ -98,9 +92,17 @@ export default function ProductDetailClient({
   const activeUrl =
     activeImg?.url && activeImg.url.trim() !== "" ? activeImg.url : null;
 
-  const waMessage = encodeURIComponent(
-    `Hello HolarzGadgets 👋\n\nI'm interested in:\n*${product.name}*\nPrice: ₦${effectivePrice.toLocaleString()}\n\nPlease confirm availability and delivery details. Thank you!`
-  );
+  const handleAddToCart = () => {
+    for (let i = 0; i < quantity; i++) addItem(product);
+    openCart();
+  };
+
+  const handleBuyNow = () => {
+    try {
+      sessionStorage.setItem("holarz_buy_now", JSON.stringify({ product, quantity }));
+    } catch {}
+    router.push("/checkout");
+  };
 
   return (
     <div className="container-app py-10">
@@ -382,41 +384,42 @@ export default function ProductDetailClient({
 
           {/* CTAs */}
           <motion.div
-            className="flex gap-3 mb-8"
+            className="flex flex-col sm:flex-row gap-3 mb-8"
             variants={itemVariants}
           >
-            {/* WhatsApp */}
-            <motion.a
-              href={`https://wa.me/2349055427487?text=${waMessage}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Add to Cart */}
+            <motion.button
+              onClick={handleAddToCart}
+              disabled={product.stockCount === 0}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               className="flex-1 flex items-center justify-center gap-2
-                py-3.5 rounded-xl font-bold text-sm text-white
-                bg-accent-green hover:opacity-90
-                shadow-[0_4px_20px_rgb(var(--color-accent-green)/30%)]
+                py-3.5 rounded-xl font-bold text-sm
+                bg-bg border-2 border-primary-500 text-primary-500
+                hover:bg-primary-50
+                disabled:opacity-50 disabled:cursor-not-allowed
                 transition-all duration-200"
             >
-              <WaIcon />
-              Chat on WhatsApp
-            </motion.a>
+              <ShoppingCart size={16} />
+              Add to Cart
+            </motion.button>
 
-            {/* Call */}
-            <motion.a
-              href="tel:+2349055427487"
+            {/* Buy Now */}
+            <motion.button
+              onClick={handleBuyNow}
+              disabled={product.stockCount === 0}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               className="flex-1 flex items-center justify-center gap-2
-                py-3.5 rounded-xl font-bold text-sm btn-outline"
+                py-3.5 rounded-xl font-bold text-sm
+                bg-primary-500 hover:bg-primary-400 text-text-onprimary
+                shadow-glow-primary
+                disabled:opacity-50 disabled:cursor-not-allowed
+                transition-all duration-200"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                className="w-4 h-4 flex-shrink-0">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
-              </svg>
-              Call Us
-            </motion.a>
+              <Zap size={16} />
+              Buy Now
+            </motion.button>
           </motion.div>
 
           {/* Trust badges */}
