@@ -29,6 +29,8 @@ import {
 } from "./types";
 import type { Product } from "@/types";
 
+const sanityOriginClient = sanityClient.withConfig({ useCdn: false });
+
 // ─────────────────────────────────────────────────────────────
 // CATEGORY TYPES
 // ─────────────────────────────────────────────────────────────
@@ -74,7 +76,7 @@ export interface SanityPost {
 // ─────────────────────────────────────────────────────────────
 
 export async function getAllProducts(): Promise<Product[]> {
-  const data = await sanityClient.fetch<SanityProductCard[]>(
+  const data = await sanityOriginClient.fetch<SanityProductCard[]>(
     ALL_PRODUCTS_QUERY, {},
     { next: { revalidate: 30, tags: ["products"] } }
   );
@@ -82,7 +84,7 @@ export async function getAllProducts(): Promise<Product[]> {
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-  const data = await sanityClient.fetch<SanityProductCard[]>(
+  const data = await sanityOriginClient.fetch<SanityProductCard[]>(
     FEATURED_PRODUCTS_QUERY, {},
     { next: { revalidate: 30, tags: ["products", "featured"] } }
   );
@@ -90,7 +92,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 }
 
 export async function getBestsellerProducts(): Promise<Product[]> {
-  const data = await sanityClient.fetch<SanityProductCard[]>(
+  const data = await sanityOriginClient.fetch<SanityProductCard[]>(
     BESTSELLER_PRODUCTS_QUERY, {},
     { next: { revalidate: 30, tags: ["products", "bestsellers"] } }
   );
@@ -100,7 +102,7 @@ export async function getBestsellerProducts(): Promise<Product[]> {
 export async function getProductBySlug(
   slug: string
 ): Promise<SanityProductDetail | null> {
-  return sanityClient.fetch<SanityProductDetail | null>(
+  return sanityOriginClient.fetch<SanityProductDetail | null>(
     PRODUCT_BY_SLUG_QUERY,
     { slug },
     { next: { revalidate: 30, tags: [`product-${slug}`] } }
@@ -112,7 +114,7 @@ export async function getRelatedProducts(
   currentSlug:  string,
   limit = 4
 ): Promise<Product[]> {
-  const data = await sanityClient.fetch<SanityProductCard[]>(
+  const data = await sanityOriginClient.fetch<SanityProductCard[]>(
     RELATED_PRODUCTS_QUERY,
     { categorySlug, slug: currentSlug, limit },
     { next: { revalidate: 30, tags: ["products"] } }
@@ -123,7 +125,7 @@ export async function getRelatedProducts(
 export async function getProductsByCategory(
   categorySlug: string
 ): Promise<Product[]> {
-  const data = await sanityClient.fetch<SanityProductCard[]>(
+  const data = await sanityOriginClient.fetch<SanityProductCard[]>(
     PRODUCTS_BY_CATEGORY_QUERY,
     { categorySlug },
     { next: { revalidate: 30, tags: ["products", `category-${categorySlug}`] } }
@@ -132,7 +134,7 @@ export async function getProductsByCategory(
 }
 
 export async function getAllProductSlugs(): Promise<{ slug: string }[]> {
-  return sanityClient.fetch<{ slug: string }[]>(
+  return sanityOriginClient.fetch<{ slug: string }[]>(
     ALL_PRODUCT_SLUGS_QUERY, {},
     { next: { revalidate: 30 } }
   );

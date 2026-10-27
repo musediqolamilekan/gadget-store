@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Raleway } from "next/font/google";
 import "./globals.css";
 import { CartProvider }  from "@/context/CartContext";
 import CartDrawer        from "@/components/CartDrawer";
@@ -7,6 +7,7 @@ import { Analytics }     from "@vercel/analytics/next";
 import NavbarServer      from "@/components/NavbarServer";
 import FooterServer      from "@/components/FooterServer";
 import WhatsAppFloat     from "@/components/WhatsAppFloat";
+import SanityRefreshBridge from "@/components/SanityRefreshBridge";
 
 // ── Fonts ────────────────────────────────────────────────────
 const inter = Inter({
@@ -15,9 +16,9 @@ const inter = Inter({
   display:  "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const raleway = Raleway({
   subsets:  ["latin"],
-  variable: "--font-space",
+  variable: "--font-raleway",
   display:  "swap",
 });
 
@@ -153,12 +154,13 @@ export default function RootLayout({
   return (
     <html
       lang="en-NG"
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      className={`${inter.variable} ${raleway.variable}`}
     >
       <body
         className="min-h-screen antialiased"
       >
         <CartProvider>
+          <SanityRefreshBridge />
           <NavbarServer />
           <CartDrawer />
           <main className="min-h-[calc(100vh-80px)]">{children}</main>

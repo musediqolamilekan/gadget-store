@@ -88,14 +88,27 @@ const config: Config = {
           hover:   "rgb(var(--color-card-hover)  / <alpha-value>)",
           border:  "rgb(var(--color-card-border) / <alpha-value>)",
         },
+
+        // ── Charcoal / black — navbar, footer, dark surfaces
+        charcoal: {
+          DEFAULT: "#111111",
+          50:      "#F5F5F5",
+          100:     "#E5E5E5",
+          400:     "#737373",
+          500:     "#111111",
+          600:     "#333333",
+          700:     "#404040",
+        },
       },
 
       // ─────────────────────────────────────────────────────
       // TYPOGRAPHY
       // ─────────────────────────────────────────────────────
       fontFamily: {
-        inter: ["var(--font-inter)", "sans-serif"],
-        space: ["var(--font-space)", "sans-serif"],
+        sans:    ["var(--font-inter)",   "Inter",   "sans-serif"],
+        inter:   ["var(--font-inter)",   "Inter",   "sans-serif"],
+        raleway: ["var(--font-raleway)", "Raleway", "sans-serif"],
+        display: ["var(--font-raleway)", "Raleway", "sans-serif"],
       },
 
       // ─────────────────────────────────────────────────────

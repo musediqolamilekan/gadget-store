@@ -4,16 +4,15 @@ import {
   Smartphone, Laptop, Watch,
   BatteryCharging, Headphones, Cable,
   Shield, Truck, RotateCcw, Headset,
-  Zap, Package, type LucideIcon,
+  Package, type LucideIcon,
 } from "lucide-react";
 import type { Metadata } from "next";
 
 import ProductCard from "@/components/ProductCard";
-import NewsletterForm from "@/components/NewsletterForm";
 import PromoBannerSection from "@/components/PromoBannerSection";
 import BrandsSectionServer from "@/components/BrandsSectionServer";
 import {
-  FadeUp, FadeInOnMount, StaggerGrid, StaggerItem,
+  FadeUp, StaggerGrid, StaggerItem,
 } from "@/components/animations";
 import {
   getFeaturedProducts,
@@ -28,8 +27,9 @@ import SocialLinks from "@/components/SocialLinks";
 // METADATA
 // ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-  title:
-    "HolarzGadgets | Original Phones, Laptops & Gadgets in Ekiti, Nigeria",
+  title: {
+    absolute: "HolarzGadgets | Original Phones, Laptops & Gadgets in Ekiti, Nigeria",
+  },
   description:
     "Shop 100% original phones, laptops, smartwatches, earbuds, power banks and accessories at HolarzGadgets — Ekiti's most trusted gadget store. Fast delivery across Ekiti State and Nigeria.",
 };

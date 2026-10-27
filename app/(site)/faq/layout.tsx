@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:       "FAQ | HolarzGadgets – Frequently Asked Questions",
+  title:       "Frequently Asked Questions",
   description:
     "Find answers to common questions about buying phones, laptops and gadgets from HolarzGadgets in Ekiti State. Shipping, returns, warranty, payment and more.",
   keywords: [

@@ -3,7 +3,7 @@ import { getAllProducts, getAllBrands, getAllCategories } from "@/sanity/lib/fet
 import ProductsClient from "@/components/ProductsClient";
 
 export const metadata = {
-  title: "All Products",
+  title: "Products",
   description: "Browse phones, laptops, earbuds, smartwatches and more at Horlarz Gadgets.",
 };
 

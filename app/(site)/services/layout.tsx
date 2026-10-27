@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:       "Digital Services | HolarzGadgets — Data, Airtime, DSTV & Google Numbers",
+  title:       "Digital Services — Data, Airtime, DSTV & Google Numbers",
   description:
     "Buy cheap data bundles, airtime, renew DSTV subscriptions, and get Google Voice / US numbers from HolarzGadgets. Fast, reliable digital services in Ekiti and across Nigeria.",
   keywords: [

@@ -34,9 +34,7 @@ export default function ProductCard({
 
   return (
     <article
-      className={`group relative flex flex-col card
-        hover:shadow-card-hover hover:border-primary-200
-        overflow-hidden transition-all duration-300 ease-out
+      className={`group relative flex flex-col product-card
         ${isCompact ? "p-3" : "p-0"}`}
     >
       {/* ── Badges ──────────────────────────────────────── */}
@@ -65,8 +63,8 @@ export default function ProductCard({
 
       {/* ── Product image ────────────────────────────────── */}
       <Link href={`/products/${product.slug}`} className="block">
-        <div className={`relative overflow-hidden bg-bg-muted
-          ${isCompact ? "h-40 rounded-xl" : "h-52 sm:h-60"}`}>
+        <div className={`product-card-image
+          ${isCompact ? "rounded-t-xl" : ""}`}>
           {imageUrl ? (
             <Image
               src={imageUrl}
@@ -93,7 +91,7 @@ export default function ProductCard({
 
           {/* Subtle gradient overlay at bottom */}
           <div className="absolute inset-0 bg-gradient-to-t
-            from-bg/30 via-transparent to-transparent" />
+            from-bg/20 via-transparent to-transparent" />
         </div>
       </Link>
 
@@ -109,7 +107,7 @@ export default function ProductCard({
 
         {/* Name */}
         <Link href={`/products/${product.slug}`}>
-          <h3 className={`font-semibold text-text leading-snug
+          <h3 className={`font-bold text-text leading-snug
             hover:text-primary-600 transition-colors line-clamp-2
             ${isCompact ? "text-sm" : "text-base"}`}>
             {product.name}
@@ -118,13 +116,13 @@ export default function ProductCard({
 
         {/* Short description — default variant only */}
         {!isCompact && (
-          <p className="mt-1 text-xs text-text-faint line-clamp-1">
+          <p className="mt-1 text-xs text-text-faint line-clamp-1 font-inter">
             {product.shortDescription}
           </p>
         )}
 
         {/* Rating */}
-        <div className="flex items-center gap-1.5 mt-2">
+        <div className="mt-2 flex items-center gap-2 rounded-full border border-border bg-bg-subtle/80 px-2 py-1.5">
           <div className="flex items-center gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
@@ -138,7 +136,7 @@ export default function ProductCard({
               />
             ))}
           </div>
-          <span className="text-[11px] text-text-faint">
+          <span className="text-[11px] text-text-muted">
             {product.rating} ({product.reviewCount.toLocaleString()})
           </span>
         </div>
@@ -149,12 +147,12 @@ export default function ProductCard({
         <div className="flex items-end justify-between mt-3 gap-2">
           <div>
             <div className="flex items-baseline gap-2">
-              <span className={`font-bold text-text
+              <span className={`price-text
                 ${isCompact ? "text-base" : "text-xl"}`}>
                 ₦{effectivePrice.toLocaleString()}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-text-faint line-through">
+                <span className="price-original text-xs">
                   ₦{product.price.toLocaleString()}
                 </span>
               )}

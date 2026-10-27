@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:       "Shipping, Returns & Warranty | HolarzGadgets",
+  title:       "Shipping, Returns & Warranty",
   description:
     "Read HolarzGadgets' shipping policy, returns & refund policy, and warranty terms. We deliver gadgets across Ekiti State and all of Nigeria with a clear, customer-first returns process.",
   keywords: [

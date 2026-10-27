@@ -4,7 +4,7 @@ import { brandSchema } from "./brand";
 import { categorySchema } from "./category";
 import { bannerSchema } from "./banner";
 import { postSchema } from "./post";
-
+import { orderSchema } from "./order";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -13,5 +13,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     categorySchema,
     bannerSchema,
     postSchema,
+    orderSchema,
   ],
 };

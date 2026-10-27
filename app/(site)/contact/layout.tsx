@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Contact Us | HolarzGadgets – Gadget Store in Ekiti",
+    title: "Contact Us",
     description:
         "Contact HolarzGadgets via WhatsApp or email. We are Ekiti's trusted gadget store selling original phones, laptops, smartwatches, and accessories. Fast response guaranteed.",
     alternates: {

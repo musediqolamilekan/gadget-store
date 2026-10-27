@@ -3,7 +3,7 @@ import { Zap, Search, Smartphone, Laptop, Headphones } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Page Not Found | HolarzGadgets",
+    title: "Page Not Found",
 };
 
 const QUICK_LINKS = [

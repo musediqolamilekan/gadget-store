@@ -6,7 +6,7 @@ import { Shield, ChevronRight } from "lucide-react";
 // SEO METADATA
 // ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-    title: "Privacy Policy | HolarzGadgets – Phone & Gadget Store in Ekiti",
+    title: "Privacy Policy",
     description:
         "Learn how HolarzGadgets collects, uses, and protects your personal data. We are Ekiti's trusted gadget store — selling phones, laptops, earbuds, and accessories across Nigeria.",
     keywords: [

@@ -23,10 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getProductBySlug(params.slug);
   if (!data) return { title: "Product Not Found" };
   return {
-    title:       data.seoTitle       ?? data.name,
+    title:       data.name,
     description: data.seoDescription ?? data.shortDescription,
     openGraph: {
-      title:       data.seoTitle       ?? data.name,
+      title:       data.name,
       description: data.seoDescription ?? data.shortDescription,
       images:      data.images?.[0]?.url ? [{ url: data.images[0].url }] : [],
     },

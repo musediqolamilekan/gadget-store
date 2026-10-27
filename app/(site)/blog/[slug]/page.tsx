@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: "Post Not Found" };
   const imgUrl = post.coverImage?.url ?? undefined;
   return {
-    title:       post.seoTitle ?? `${post.title} | HolarzGadgets Blog`,
+    title:       post.title,
     description: post.seoDescription ?? post.excerpt,
     keywords:    post.tags,
     alternates:  { canonical: `https://horlarzgadgets.com/blog/${post.slug}` },

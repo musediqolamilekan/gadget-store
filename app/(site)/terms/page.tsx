@@ -6,7 +6,7 @@ import { FileText, ChevronRight } from "lucide-react";
 // SEO METADATA
 // ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-    title: "Terms of Service | HolarzGadgets – Phone & Gadget Store in Ekiti",
+    title: "Terms of Service",
     description:
         "Read the Terms of Service for HolarzGadgets, Ekiti's trusted online store for phones, laptops, smartwatches, earbuds, and accessories. Shop premium gadgets in Ado-Ekiti and across Nigeria.",
     keywords: [

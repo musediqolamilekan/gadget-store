@@ -6,55 +6,56 @@
    DESIGN TOKENS — single source of truth
    All colours are raw RGB channels so Tailwind can apply
    opacity modifiers: bg-primary-500/20, text-text/80 etc.
-   To switch theme: edit ONLY the :root block below.
-   To enable dark mode: add class="dark" to <html>.
+   Premium Black & White Light Theme for HolarzGadgets.
    ═══════════════════════════════════════════════════════════ */
 :root {
-  /* ── Primary brand (orange) ─────────────────────────── */
-  --color-primary-50:  255 247 237;
-  --color-primary-100: 255 237 213;
-  --color-primary-200: 254 215 170;
-  --color-primary-300: 253 186 116;
-  --color-primary-400: 251 146 60;
-  --color-primary-500: 249 115 22;   /* ← main brand */
-  --color-primary-600: 234 88  12;
-  --color-primary-700: 194 65  12;
-  --color-primary-800: 154 52  18;
-  --color-primary-900: 124 45  18;
-  --color-primary-950: 67  20  7;
+  /* ── Brand accent — #FF5A0A Orange ─────────────────────
+     primary-500 = the orange CTA colour
+     primary-50/100 = tinted bg for hover states            */
+  --color-primary-50:  255 240 230;   /* very light orange tint  */
+  --color-primary-100: 255 220 195;   /* light orange tint        */
+  --color-primary-200: 255 185 140;   /* soft orange              */
+  --color-primary-300: 255 140 80;    /* medium orange            */
+  --color-primary-400: 255 100 40;    /* vivid orange             */
+  --color-primary-500: 255 90  10;    /* #FF5A0A — brand orange   */
+  --color-primary-600: 224 75  0;     /* darker orange for hover  */
+  --color-primary-700: 180 58  0;
+  --color-primary-800: 140 45  0;
+  --color-primary-900: 100 32  0;
+  --color-primary-950: 60  18  0;
 
-  /* ── Backgrounds (light) ─────────────────────────────── */
-  --color-bg:         255 255 255;   /* white       */
-  --color-bg-subtle:  250 250 250;   /* gray-50     */
-  --color-bg-muted:   245 245 245;   /* gray-100    */
-  --color-bg-inverse: 17  24  39;    /* gray-900    */
+  /* ── Backgrounds ─────────────────────────────────────── */
+  --color-bg:         255 255 255;   /* #FFFFFF — pure white canvas  */
+  --color-bg-subtle:  248 249 250;   /* #F8F9FA — cards/alt sections */
+  --color-bg-muted:   242 244 246;   /* light gray for inputs        */
+  --color-bg-inverse: 17  17  17;   /* #111111 — black nav/footer   */
 
-  /* ── Text (light) ────────────────────────────────────── */
-  --color-text:           17  24  39;   /* gray-900  */
-  --color-text-muted:     107 114 128;  /* gray-500  */
-  --color-text-faint:     156 163 175;  /* gray-400  */
-  --color-text-inverse:   255 255 255;  /* white     */
-  --color-text-onprimary: 255 255 255;  /* on orange */
+  /* ── Text ────────────────────────────────────────────── */
+  --color-text:           17  17  17;   /* #111111 — headings/body   */
+  --color-text-muted:     102 102 102;  /* #666666 — desc/metadata   */
+  --color-text-faint:     153 153 153;  /* #999999 — placeholders    */
+  --color-text-inverse:   255 255 255;  /* white on dark bg          */
+  --color-text-onprimary: 255 255 255;  /* white on #111 button      */
 
-  /* ── Borders (light) ─────────────────────────────────── */
-  --color-border:        229 231 235;  /* gray-200  */
-  --color-border-strong: 156 163 175;  /* gray-400  */
-  --color-border-subtle: 243 244 246;  /* gray-100  */
+  /* ── Borders ─────────────────────────────────────────── */
+  --color-border:        229 231 235;  /* #E5E7EB — dividers/cards  */
+  --color-border-strong: 180 180 180;  /* stronger separator        */
+  --color-border-subtle: 243 244 246;  /* hairline                  */
 
-  /* ── Cards (light) ───────────────────────────────────── */
-  --color-card:        255 255 255;
-  --color-card-hover:  249 250 251;
-  --color-card-border: 229 231 235;
+  /* ── Cards ───────────────────────────────────────────── */
+  --color-card:        255 255 255;   /* white card face           */
+  --color-card-hover:  248 249 250;   /* #F8F9FA on hover          */
+  --color-card-border: 229 231 235;   /* 1px #E5E7EB border        */
 
   /* ── Accent palette ──────────────────────────────────── */
-  --color-accent-cyan:   6   182 212;  /* cyan-500   */
-  --color-accent-violet: 124 58  237;  /* violet-600 */
-  --color-accent-green:  16  185 129;  /* emerald-500*/
-  --color-accent-amber:  245 158 11;   /* amber-500  */
-  --color-accent-rose:   244 63  94;   /* rose-500   */
+  --color-accent-cyan:   6   182 212;
+  --color-accent-violet: 124 58  237;
+  --color-accent-green:  16  185 129;
+  --color-accent-amber:  245 158 11;
+  --color-accent-rose:   244 63  94;
 
   /* ── Status ──────────────────────────────────────────── */
-  --color-success:    16  185 129;
+  --color-success:    34  197  94;
   --color-success-bg: 240 253 244;
   --color-warning:    245 158 11;
   --color-warning-bg: 255 251 235;
@@ -62,48 +63,41 @@
   --color-danger-bg:  254 242 242;
 
   /* ── Scrollbar ───────────────────────────────────────── */
-  --scrollbar-track: 249 250 251;   /* gray-50  */
-  --scrollbar-thumb: 209 213 219;   /* gray-300 */
-  --scrollbar-hover: 156 163 175;   /* gray-400 */
+  --scrollbar-track: 249 250 251;
+  --scrollbar-thumb: 229 231 235;
+  --scrollbar-hover: 180 180 180;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   DARK MODE — only values that differ from light
-   Activated by: <html class="dark">
+   DARK MODE — activate with class="dark" on <html>
    ═══════════════════════════════════════════════════════════ */
 .dark {
-  /* Backgrounds */
-  --color-bg:         15  23  42;    /* slate-950 */
-  --color-bg-subtle:  30  41  59;    /* slate-800 */
-  --color-bg-muted:   51  65  85;    /* slate-700 */
+  --color-bg:         15  23  42;
+  --color-bg-subtle:  30  41  59;
+  --color-bg-muted:   51  65  85;
   --color-bg-inverse: 255 255 255;
 
-  /* Text */
-  --color-text:           241 245 249;  /* slate-100 */
-  --color-text-muted:     148 163 184;  /* slate-400 */
-  --color-text-faint:     100 116 139;  /* slate-500 */
+  --color-text:           241 245 249;
+  --color-text-muted:     148 163 184;
+  --color-text-faint:     100 116 139;
   --color-text-inverse:   15  23  42;
   --color-text-onprimary: 255 255 255;
 
-  /* Borders */
-  --color-border:        51  65  85;   /* slate-700 */
-  --color-border-strong: 100 116 139;  /* slate-500 */
-  --color-border-subtle: 30  41  59;   /* slate-800 */
+  --color-border:        51  65  85;
+  --color-border-strong: 100 116 139;
+  --color-border-subtle: 30  41  59;
 
-  /* Cards */
   --color-card:        30  41  59;
   --color-card-hover:  51  65  85;
   --color-card-border: 51  65  85;
 
-  /* Status backgrounds (dark variants) */
   --color-success-bg: 6   78  59;
   --color-warning-bg: 120 53  15;
   --color-danger-bg:  127 29  29;
 
-  /* Scrollbar */
-  --scrollbar-track: 15  23  42;    /* slate-950 */
-  --scrollbar-thumb: 51  65  85;    /* slate-700 */
-  --scrollbar-hover: 71  85  105;   /* slate-600 */
+  --scrollbar-track: 15  23  42;
+  --scrollbar-thumb: 51  65  85;
+  --scrollbar-hover: 71  85  105;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -112,21 +106,43 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-size: 16px; /* prevents pinch-zoom on mobile */
   }
 
+  /* ── Body — Inter for crisp technical legibility ──────── */
   body {
     background-color: rgb(var(--color-bg));
     color:            rgb(var(--color-text));
-    @apply font-inter antialiased;
+    font-family:      var(--font-inter), "Inter", sans-serif;
+    font-size:        1rem;
+    line-height:      1.6;
+    @apply antialiased;
+  }
+
+  /* ── Headings — Raleway for sleek geometric tech look ─── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family:    var(--font-raleway), "Raleway", sans-serif;
+    font-weight:    700;
+    letter-spacing: -0.03em;
+    line-height:    1.15;
+    color:          rgb(var(--color-text));
+  }
+
+  h1 { font-size: clamp(1.875rem, 4vw, 3rem);   font-weight: 800; }
+  h2 { font-size: clamp(1.5rem,   3vw, 2.25rem); font-weight: 700; }
+  h3 { font-size: clamp(1.125rem, 2vw, 1.5rem);  font-weight: 600; }
+  h4 { font-size: 1.125rem; font-weight: 600; }
+
+  p, li, span, small, strong, label, td, th {
+    color: rgb(var(--color-text));
   }
 
   ::selection {
-    background-color: rgb(var(--color-primary-500) / 0.2);
-    color:            rgb(var(--color-primary-700));
+    background-color: rgb(var(--color-primary-500) / 0.12);
+    color:            rgb(var(--color-primary-500));
   }
-
   .dark ::selection {
-    background-color: rgb(var(--color-primary-500) / 0.3);
+    background-color: rgb(var(--color-primary-500) / 0.25);
     color:            rgb(var(--color-primary-200));
   }
 
@@ -137,9 +153,9 @@
   }
 
   /* Scrollbar */
-  ::-webkit-scrollbar        { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track  { background: rgb(var(--scrollbar-track)); }
-  ::-webkit-scrollbar-thumb  { background: rgb(var(--scrollbar-thumb)); border-radius: 99px; }
+  ::-webkit-scrollbar             { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track       { background: rgb(var(--scrollbar-track)); }
+  ::-webkit-scrollbar-thumb       { background: rgb(var(--scrollbar-thumb)); border-radius: 99px; }
   ::-webkit-scrollbar-thumb:hover { background: rgb(var(--scrollbar-hover)); }
 }
 
@@ -148,52 +164,104 @@
    ═══════════════════════════════════════════════════════════ */
 @layer components {
 
-  /* ── Layout ─────────────────────────────────────────── */
-  .container-app  { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  /* ── Layout ──────────────────────────────────────────── */
+  .container-app   { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
   .section-padding { @apply py-16 md:py-24; }
 
-  /* ── Surface card ────────────────────────────────────── */
+  /* ── Surface card — white, 1px #E5E7EB, subtle shadow ── */
   .card {
     background-color: rgb(var(--color-card));
     border:           1px solid rgb(var(--color-card-border));
     @apply rounded-2xl;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+                0 4px 12px rgba(0, 0, 0, 0.04);
   }
   .card-hover {
     background-color: rgb(var(--color-card-hover));
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+                0 12px 32px rgba(0, 0, 0, 0.06);
   }
 
-  /* ── Glass (dark mode only — falls back to card in light) */
+  /* ── Product card — uniform height, 4:3 image, 1px border */
+  .product-card {
+    background-color: rgb(var(--color-card));
+    border:           1px solid rgb(var(--color-card-border));
+    @apply rounded-2xl overflow-hidden flex flex-col;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+                0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 200ms ease-out,
+                box-shadow 200ms ease-out,
+                border-color 200ms ease-out;
+  }
+  .product-card:hover {
+    transform:    translateY(-2px);
+    border-color: rgb(var(--color-border-strong));
+    box-shadow:   0 8px 24px rgba(0, 0, 0, 0.10),
+                  0 20px 48px rgba(0, 0, 0, 0.07);
+  }
+
+  /* Fixed-ratio image container */
+  .product-card-image {
+    position:      relative;
+    width:         100%;
+    aspect-ratio:  4 / 3;
+    overflow:      hidden;
+    background:    rgb(var(--color-bg-subtle));
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  /* ── Spec pills ──────────────────────────────────────── */
+  .spec-list {
+    @apply flex flex-wrap items-center gap-1.5;
+  }
+  .spec-item {
+    display:     inline-flex;
+    align-items: center;
+    gap:         6px;
+    padding:     3px 10px;
+    border-radius: 9999px;
+    border:      1px solid rgb(var(--color-border));
+    background:  rgb(var(--color-bg-subtle));
+    font-family: var(--font-inter), "Inter", sans-serif;
+    font-size:   11px;
+    font-weight: 500;
+    color:       rgb(var(--color-text-muted));
+    white-space: nowrap;
+  }
+
+  /* ── Glass ───────────────────────────────────────────── */
   .glass {
     background-color: rgb(var(--color-bg-subtle) / 0.7);
     border:           1px solid rgb(var(--color-border));
     @apply backdrop-blur-xl;
   }
   .glass-card {
-    background-color: rgb(var(--color-card) / 0.8);
+    background-color: rgb(var(--color-card) / 0.85);
     border:           1px solid rgb(var(--color-card-border));
     @apply backdrop-blur-md rounded-2xl;
   }
 
-  /* ── Glow helpers — driven by tokens ─────────────────── */
-  .glow-primary { box-shadow: 0 0 20px rgb(var(--color-primary-500) / 35%); }
-  .glow-cyan    { box-shadow: 0 0 20px rgb(var(--color-accent-cyan)   / 35%); }
-  .glow-violet  { box-shadow: 0 0 20px rgb(var(--color-accent-violet) / 35%); }
-  .glow-green   { box-shadow: 0 0 20px rgb(var(--color-accent-green)  / 35%); }
+  /* ── Glow helpers ────────────────────────────────────── */
+  .glow-primary    { box-shadow: 0 0 20px rgb(var(--color-primary-500) / 20%); }
+  .glow-primary-sm { box-shadow: 0 0 10px rgb(var(--color-primary-500) / 15%); }
+  .glow-cyan       { box-shadow: 0 0 20px rgb(var(--color-accent-cyan)   / 30%); }
+  .glow-violet     { box-shadow: 0 0 20px rgb(var(--color-accent-violet) / 30%); }
+  .glow-green      { box-shadow: 0 0 20px rgb(var(--color-accent-green)  / 30%); }
 
-  /* ── Text gradients ───────────────────────────────────── */
+  /* ── Text gradients ──────────────────────────────────── */
   .text-gradient-primary {
     background: linear-gradient(
       to right,
-      rgb(var(--color-primary-400)),
+      rgb(var(--color-primary-500)),
       rgb(var(--color-primary-600))
     );
     @apply bg-clip-text text-transparent;
   }
   .text-gradient-cyan {
-    @apply bg-gradient-to-r from-cyan-400 to-cyan-200 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-cyan-500 to-cyan-300 bg-clip-text text-transparent;
   }
   .text-gradient-volt {
-    @apply bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-violet-500 to-cyan-400 bg-clip-text text-transparent;
   }
   .text-gradient-warm {
     background: linear-gradient(
@@ -205,27 +273,97 @@
     @apply bg-clip-text text-transparent;
   }
 
-  /* ── Button base ─────────────────────────────────────── */
+  /* ═══════════════════════════════════════════════════════
+     CTA BUTTONS
+     ═══════════════════════════════════════════════════════ */
+
+  /* Standard CTA — Add to Cart / secondary actions
+     Background: #FF5A0A → darker orange on hover */
   .btn-primary {
-    background-color: rgb(var(--color-primary-500));
-    color:            rgb(var(--color-text-onprimary));
-    @apply px-5 py-2.5 rounded-xl font-semibold text-sm
-           transition-all duration-200 inline-flex items-center gap-2;
+    background-color: rgb(var(--color-primary-500));   /* #FF5A0A */
+    color:            rgb(var(--color-text-onprimary)); /* #FFFFFF */
+    border:           1px solid rgb(var(--color-primary-500));
+    font-family:      var(--font-inter), "Inter", sans-serif;
+    font-weight:      600;
+    @apply px-5 py-2.5 rounded-xl text-sm
+           transition-all duration-300 ease-out inline-flex items-center gap-2;
   }
   .btn-primary:hover {
     background-color: rgb(var(--color-primary-600));
-    box-shadow: 0 0 20px rgb(var(--color-primary-500) / 40%);
+    border-color:     rgb(var(--color-primary-600));
+    box-shadow:       0 8px 20px rgba(255, 90, 10, 0.30);
+    transform:        translateY(-1px);
   }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* WhatsApp Checkout CTA — #25D366 with trust localisation */
+  .btn-whatsapp {
+    background-color: #25D366;
+    color:            #FFFFFF;
+    border:           1px solid #25D366;
+    font-family:      var(--font-inter), "Inter", sans-serif;
+    font-weight:      600;
+    @apply px-5 py-2.5 rounded-xl text-sm
+           transition-all duration-300 ease-out inline-flex items-center gap-2;
+  }
+  .btn-whatsapp:hover {
+    background-color: #1da851;
+    border-color:     #1da851;
+    box-shadow:       0 8px 24px rgba(37, 211, 102, 0.30);
+    transform:        translateY(-1px);
+  }
+  .btn-whatsapp:active { transform: translateY(0); }
+
+  /* Ghost / outline button */
   .btn-outline {
     background-color: transparent;
     color:            rgb(var(--color-text));
     border:           1px solid rgb(var(--color-border));
-    @apply px-5 py-2.5 rounded-xl font-semibold text-sm
+    font-family:      var(--font-inter), "Inter", sans-serif;
+    font-weight:      600;
+    @apply px-5 py-2.5 rounded-xl text-sm
            transition-all duration-200 inline-flex items-center gap-2;
   }
   .btn-outline:hover {
     border-color:     rgb(var(--color-border-strong));
     background-color: rgb(var(--color-bg-subtle));
+  }
+
+  /* ── Typography helpers ──────────────────────────────── */
+  .heading-display {
+    font-family:    var(--font-raleway), "Raleway", sans-serif;
+    font-weight:    800;
+    letter-spacing: -0.04em;
+    line-height:    1.05;
+  }
+  .heading-section {
+    font-family:    var(--font-raleway), "Raleway", sans-serif;
+    font-weight:    700;
+    letter-spacing: -0.03em;
+    line-height:    1.15;
+  }
+  .body-inter {
+    font-family: var(--font-inter), "Inter", sans-serif;
+    line-height: 1.6;
+  }
+  .spec-text {
+    font-family: var(--font-inter), "Inter", sans-serif;
+    font-size:   0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color:       rgb(var(--color-text-muted));
+  }
+  .price-text {
+    font-family: var(--font-inter), "Inter", sans-serif;
+    font-weight: 700;
+    color:       rgb(var(--color-text));
+  }
+  .price-original {
+    font-family:     var(--font-inter), "Inter", sans-serif;
+    font-weight:     400;
+    font-size:       0.875rem;
+    color:           rgb(var(--color-text-muted));
+    text-decoration: line-through;
   }
 }
 
@@ -256,12 +394,12 @@
   /* Promo swiper pagination dots */
   .promo-banner-swiper .swiper-pagination        { margin-top: 20px; position: relative; }
   .promo-banner-swiper .swiper-pagination-bullet {
-    width: 10px; height: 10px; opacity: 1;
+    width: 8px; height: 8px; opacity: 1;
     background: rgb(var(--color-border-strong));
     transition: all 0.25s ease;
   }
   .promo-banner-swiper .swiper-pagination-bullet-active {
-    width: 28px; border-radius: 9999px;
+    width: 24px; border-radius: 9999px;
     background: rgb(var(--color-primary-500));
   }
 }

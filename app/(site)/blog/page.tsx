@@ -10,7 +10,7 @@ import BlogListClient from "./BlogListClient";
 // SEO
 // ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-  title: "Blog | HolarzGadgets — Gadget Reviews & Buying Guides",
+  title: "Gadget Reviews & Buying Guides",
   description:
     "Read expert gadget reviews, buying guides, and tech tips from HolarzGadgets — Ekiti's most trusted gadget store. Find the best phones, laptops and accessories in Nigeria.",
   keywords: [
